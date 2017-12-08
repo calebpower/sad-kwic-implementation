@@ -1,0 +1,10 @@
+/*
+ * CSS present to prove that SparkJava static files are working as intended.
+ *
+ * @author Caleb L. Power
+ *
+ */
+.content {
+  font-weight: bold;
+  text-align: center;
+}
