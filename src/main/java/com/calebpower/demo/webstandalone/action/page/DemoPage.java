@@ -1,9 +1,8 @@
-package com.calebpower.demo.webstandalone.model.page.impl;
+package com.calebpower.demo.webstandalone.action.page;
 
 import java.util.HashMap;
 
-import com.calebpower.demo.webstandalone.model.page.Page;
-import com.calebpower.demo.webstandalone.view.FrontEnd.RequestType;
+import com.calebpower.demo.webstandalone.action.FrontEnd.RequestType;
 
 import spark.ModelAndView;
 import spark.Request;

@@ -1,6 +1,7 @@
-package com.calebpower.demo.webstandalone.model.page;
+package com.calebpower.demo.webstandalone.action.page;
 
-import com.calebpower.demo.webstandalone.view.FrontEnd.RequestType;
+import com.calebpower.demo.webstandalone.action.FrontEnd;
+import com.calebpower.demo.webstandalone.action.FrontEnd.RequestType;
 
 import spark.ModelAndView;
 import spark.Request;

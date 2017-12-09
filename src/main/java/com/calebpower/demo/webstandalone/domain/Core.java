@@ -1,8 +1,8 @@
-package com.calebpower.demo.webstandalone.controller;
+package com.calebpower.demo.webstandalone.domain;
 
-import com.calebpower.demo.webstandalone.controller.persistent.Config;
-import com.calebpower.demo.webstandalone.view.FrontEnd;
-import com.calebpower.demo.webstandalone.view.Prompter;
+import com.calebpower.demo.webstandalone.action.FrontEnd;
+import com.calebpower.demo.webstandalone.action.Prompter;
+import com.calebpower.demo.webstandalone.domain.persistent.Config;
 
 /**
  * Demonstration of a stand-alone web application that utilizes a JSON-based

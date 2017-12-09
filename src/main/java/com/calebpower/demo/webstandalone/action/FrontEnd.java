@@ -1,14 +1,13 @@
-package com.calebpower.demo.webstandalone.view;
+package com.calebpower.demo.webstandalone.action;
 
 import static spark.Spark.get;
 import static spark.Spark.port;
 import static spark.Spark.post;
+import static spark.Spark.staticFiles;
 import static spark.Spark.stop;
 
-import static spark.Spark.staticFiles;
-
-import com.calebpower.demo.webstandalone.model.page.Page;
-import com.calebpower.demo.webstandalone.model.page.impl.DemoPage;
+import com.calebpower.demo.webstandalone.action.page.DemoPage;
+import com.calebpower.demo.webstandalone.action.page.Page;
 
 /**
  * Front end view; manages all pages and directs traffic to those pages.
@@ -16,6 +15,9 @@ import com.calebpower.demo.webstandalone.model.page.impl.DemoPage;
  * @author Caleb L. Power
  */
 public class FrontEnd implements Runnable {
+  
+  private static final String RESPONDER_STATIC_FOLDER = "responder/static";
+  private static final String RESPONDER_TEMPLATE_FOLDER = "/responder/templates";
   
   private int port; //the port that the front end should run on
   private FreeMarkerEngine freeMarkerEngine = null; //the FreeMarker engine
@@ -39,13 +41,13 @@ public class FrontEnd implements Runnable {
     
     this.port = port;
     
-    if(freeMarkerEngine == null) freeMarkerEngine = new FreeMarkerEngine("/sparkjava/templates");
+    if(freeMarkerEngine == null) freeMarkerEngine = new FreeMarkerEngine(RESPONDER_TEMPLATE_FOLDER);
     
     pages = new Page[] {
         new DemoPage()
       };
     
-    staticFiles.location("sparkjava/static"); //relative to the root of the classpath
+    staticFiles.location(RESPONDER_STATIC_FOLDER); //relative to the root of the classpath
     
   }
 

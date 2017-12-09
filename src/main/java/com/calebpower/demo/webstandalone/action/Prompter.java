@@ -1,4 +1,4 @@
-package com.calebpower.demo.webstandalone.view;
+package com.calebpower.demo.webstandalone.action;
 
 import java.io.BufferedReader;
 import java.io.IOException;

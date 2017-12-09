@@ -1,6 +1,8 @@
-package com.calebpower.demo.webstandalone.controller.persistent;
+package com.calebpower.demo.webstandalone.domain.persistent;
 
 import org.junit.Test;
+
+import com.calebpower.demo.webstandalone.domain.persistent.Config;
 
 import static org.junit.Assert.*;
 
