@@ -26,7 +26,7 @@ public class Core {
     
     System.out.println("Launching front end...");
     frontEnd = new FrontEnd(config.getSparkPort()); //configure the front end
-    (new Thread(frontEnd)).run(); //run the front end in a different thread
+    (new Thread(frontEnd)).start(); //run the front end in a different thread
     
     System.out.println("Loading prompter...");
     prompter = new Prompter(); //set up the prompter
