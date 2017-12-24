@@ -1,6 +1,5 @@
 package com.calebpower.demo.webstandalone.action.page;
 
-import com.calebpower.demo.webstandalone.action.FrontEnd;
 import com.calebpower.demo.webstandalone.action.FrontEnd.RequestType;
 
 import spark.ModelAndView;
