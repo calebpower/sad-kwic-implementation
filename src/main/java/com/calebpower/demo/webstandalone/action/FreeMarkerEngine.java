@@ -10,11 +10,8 @@ import spark.ModelAndView;
 import spark.TemplateEngine;
 
 /**
- * FreeMarker configuration can be set with the
- * {@link FreeMarkerEngine#setConfiguration(Configuration)} method. If no
- * configuration is set the default configuration will be used where ftl files
- * need to be put in directory resources/template/freemarker.
- *
+ * FreeMarker engine for hypertext transformations.
+ * 
  * @author Alex
  * @author Per Wendel
  * @author Caleb L. Power

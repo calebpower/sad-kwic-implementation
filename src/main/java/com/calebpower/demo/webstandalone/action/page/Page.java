@@ -19,8 +19,8 @@ public abstract class Page {
   /**
    * Overloaded constructor to set the request type and the route.
    * 
-   * @param requestType
-   * @param route
+   * @param requestType the type of request allows (GET and/or POST)
+   * @param route the public endpoint
    */
   public Page(RequestType requestType, String route) {
     this.requestType = requestType;
