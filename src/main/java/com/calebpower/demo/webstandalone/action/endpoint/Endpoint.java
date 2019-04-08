@@ -1,6 +1,5 @@
 package com.calebpower.demo.webstandalone.action.endpoint;
 
-import com.calebpower.demo.webstandalone.action.FreeMarkerEngine;
 import com.calebpower.demo.webstandalone.action.HTTPMethod;
 
 import spark.ModelAndView;

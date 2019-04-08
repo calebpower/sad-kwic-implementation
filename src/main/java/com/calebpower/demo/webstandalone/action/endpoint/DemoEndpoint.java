@@ -2,7 +2,6 @@ package com.calebpower.demo.webstandalone.action.endpoint;
 
 import java.util.HashMap;
 
-import com.calebpower.demo.webstandalone.action.FrontEnd.RequestType;
 import com.calebpower.demo.webstandalone.action.HTTPMethod;
 
 import spark.ModelAndView;
