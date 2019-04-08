@@ -1,13 +1,16 @@
 package com.calebpower.demo.webstandalone.action;
 
+import static spark.Spark.delete;
 import static spark.Spark.get;
+import static spark.Spark.patch;
 import static spark.Spark.port;
 import static spark.Spark.post;
+import static spark.Spark.put;
 import static spark.Spark.staticFiles;
 import static spark.Spark.stop;
 
-import com.calebpower.demo.webstandalone.action.page.DemoPage;
-import com.calebpower.demo.webstandalone.action.page.Page;
+import com.calebpower.demo.webstandalone.action.endpoint.DemoEndpoint;
+import com.calebpower.demo.webstandalone.action.endpoint.Endpoint;
 
 /**
  * Front end view; manages all pages and directs traffic to those pages.
@@ -21,7 +24,7 @@ public class FrontEnd implements Runnable {
   
   private int port; //the port that the front end should run on
   private FreeMarkerEngine freeMarkerEngine = null; //the FreeMarker engine
-  private Page pages[] = null; //the pages that will be accessible
+  private Endpoint endpoints[] = null; //the pages that will be accessible
   
   /**
    * The request type (limited to GET and/or POST) for a given page.
@@ -43,8 +46,8 @@ public class FrontEnd implements Runnable {
     
     if(freeMarkerEngine == null) freeMarkerEngine = new FreeMarkerEngine(RESPONDER_TEMPLATE_FOLDER);
     
-    pages = new Page[] {
-        new DemoPage()
+    endpoints = new Endpoint[] {
+        new DemoEndpoint()
       };
     
     staticFiles.location(RESPONDER_STATIC_FOLDER); //relative to the root of the classpath
@@ -57,18 +60,26 @@ public class FrontEnd implements Runnable {
   @Override public void run() {
     port(port);
     
-    for(Page page : pages) { //iterate through initialized pages and determine the appropriate HTTP request types
-      
-      //pages that need to viewed by URL submission should have HTTP GET enabled
-      if(page.getRequestType() == RequestType.GET_ONLY || page.getRequestType() == RequestType.GET_AND_POST) {
-        get(page.getRoute(), page::action, freeMarkerEngine);
+    for(Endpoint endpoint : endpoints) { //iterate through initialized pages and determine the appropriate HTTP request types
+      for(HTTPMethod method : endpoint.getHTTPMethods()) {
+        switch(method) {
+        case DELETE:
+          delete(endpoint.getRoute(), endpoint::action, freeMarkerEngine);
+          break;
+        case GET:
+          get(endpoint.getRoute(), endpoint::action, freeMarkerEngine);
+          break;
+        case PATCH:
+          patch(endpoint.getRoute(), endpoint::action, freeMarkerEngine);
+          break;
+        case POST:
+          post(endpoint.getRoute(), endpoint::action, freeMarkerEngine);
+          break;
+        case PUT:
+          put(endpoint.getRoute(), endpoint::action, freeMarkerEngine);
+          break;
+        }
       }
-      
-      //pages that need to be viewed by secret form submission (i.e. for passwords) should have HTTP POST enabled
-      if(page.getRequestType() == RequestType.POST_ONLY || page.getRequestType() == RequestType.GET_AND_POST) {
-        post(page.getRoute(), page::action, freeMarkerEngine);
-      }
-      
     }
   }
   

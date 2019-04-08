@@ -1,8 +1,9 @@
-package com.calebpower.demo.webstandalone.action.page;
+package com.calebpower.demo.webstandalone.action.endpoint;
 
 import java.util.HashMap;
 
 import com.calebpower.demo.webstandalone.action.FrontEnd.RequestType;
+import com.calebpower.demo.webstandalone.action.HTTPMethod;
 
 import spark.ModelAndView;
 import spark.Request;
@@ -13,13 +14,13 @@ import spark.Response;
  * 
  * @author Caleb L. Power
  */
-public class DemoPage extends Page {
+public class DemoEndpoint extends Endpoint {
 
   /**
    * Null constructor to initialize the index page and set the appropriate HTTP request type.
    */
-  public DemoPage() {
-    super(RequestType.GET_ONLY, "/"); //this page should only be accessible via GET
+  public DemoEndpoint() {
+    super("/", HTTPMethod.GET); //this page should only be accessible via GET
   }
 
   /**

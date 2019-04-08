@@ -10,11 +10,11 @@ repositories {
 }
 
 dependencies {
-  compile 'com.sparkjava:spark-core:2.7.1'
+  compile 'com.sparkjava:spark-core:2.8.0'
   compile 'org.mindrot:jbcrypt:0.3m'
-  compile group: 'org.freemarker', name: 'freemarker', version: '2.3.23'
-  compile group: 'org.json', name: 'json', version: '20171018'
-  compile group: 'org.slf4j', name: 'slf4j-simple', version: '1.7.25'
+  compile group: 'org.freemarker', name: 'freemarker', version: '2.3.28'
+  compile group: 'org.json', name: 'json', version: '20180813'
+  compile group: 'org.slf4j', name: 'slf4j-simple', version: '1.8.0-beta4'
   testImplementation 'junit:junit:4.12'
 }
 

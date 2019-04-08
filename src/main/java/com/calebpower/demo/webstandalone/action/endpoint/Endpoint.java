@@ -1,6 +1,7 @@
-package com.calebpower.demo.webstandalone.action.page;
+package com.calebpower.demo.webstandalone.action.endpoint;
 
-import com.calebpower.demo.webstandalone.action.FrontEnd.RequestType;
+import com.calebpower.demo.webstandalone.action.FreeMarkerEngine;
+import com.calebpower.demo.webstandalone.action.HTTPMethod;
 
 import spark.ModelAndView;
 import spark.Request;
@@ -11,9 +12,9 @@ import spark.Response;
  * 
  * @author Caleb L. Power
  */
-public abstract class Page {
+public abstract class Endpoint {
   
-  private RequestType requestType = null;
+  private HTTPMethod[] methods = null;
   private String route = null;
   
   /**
@@ -22,20 +23,18 @@ public abstract class Page {
    * @param requestType the type of request allows (GET and/or POST)
    * @param route the public endpoint
    */
-  public Page(RequestType requestType, String route) {
-    this.requestType = requestType;
+  public Endpoint(String route, HTTPMethod... methods) {
     this.route = route;
+    this.methods = methods;
   }
   
   /**
-   * Retrieve the request type (GET, POST, or BOTH) for the particular module.
+   * Retrieve the HTTP method types for this route.
    * 
-   * @return <code>GET_ONLY</code> if only a GET request is to be used,
-   *         <code>POST_ONLY</code> if only a POST request is to be used, and
-   *         <code>GET_AND_POST</code> if both a GET and POST request can be used
+   * @return array of type HTTPMethod
    */
-  public RequestType getRequestType() {
-    return requestType;
+  public HTTPMethod[] getHTTPMethods() {
+    return methods;
   }
   
   /**

@@ -21,6 +21,11 @@ public class Config {
   private static JSONObject data = null; //the actual JSON data
   
   /**
+   * Null constructor.
+   */
+  public Config() { }
+  
+  /**
    * Creates the configuration object by specifying the filename.
    * 
    * @param fileName the name and location of the configuration file on the disk

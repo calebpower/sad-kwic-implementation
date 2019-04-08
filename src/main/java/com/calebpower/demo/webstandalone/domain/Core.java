@@ -18,11 +18,7 @@ public class Core {
   private static Prompter prompter = null; //console prompter
   
   public static void main(String[] args) {
-    config = args.length == 1 ? new Config(args[0]).load() : null; //load the config
-    if(config == null) { //complain if the config can't be loaded
-      System.out.println("Configuration file could not be loaded.");
-      System.exit(1); //exit with the proper error code
-    }
+    config = args.length == 1 ? new Config(args[0]).load() : new Config(); //load the config
     
     System.out.println("Launching front end...");
     frontEnd = new FrontEnd(config.getSparkPort()); //configure the front end
