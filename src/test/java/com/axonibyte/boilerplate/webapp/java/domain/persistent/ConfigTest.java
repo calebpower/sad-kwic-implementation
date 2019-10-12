@@ -1,4 +1,4 @@
-package com.calebpower.demo.webstandalone.domain.persistent;
+package com.axonibyte.boilerplate.webapp.java.domain.persistent;
 
 import org.junit.Test;
 
