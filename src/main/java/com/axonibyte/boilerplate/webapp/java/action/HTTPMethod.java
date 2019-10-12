@@ -1,4 +1,4 @@
-package com.calebpower.demo.webstandalone.action;
+package com.axonibyte.boilerplate.webapp.java.action;
 
 /*
  * HTTP request methods.

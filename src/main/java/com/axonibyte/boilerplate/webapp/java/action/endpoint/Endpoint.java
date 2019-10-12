@@ -1,6 +1,6 @@
-package com.calebpower.demo.webstandalone.action.endpoint;
+package com.axonibyte.boilerplate.webapp.java.action.endpoint;
 
-import com.calebpower.demo.webstandalone.action.HTTPMethod;
+import com.axonibyte.boilerplate.webapp.java.action.HTTPMethod;
 
 import spark.ModelAndView;
 import spark.Request;

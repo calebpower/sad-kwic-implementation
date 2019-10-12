@@ -1,5 +1,5 @@
 plugins {
-  id "com.github.johnrengelman.shadow" version "2.0.1"
+  id "com.github.johnrengelman.shadow" version "5.1.0"
 }
 
 apply plugin: 'java-library'
@@ -9,12 +9,17 @@ repositories {
   jcenter()
 }
 
+group = theGroup
+version = theVersion
+sourceCompatibility = theCompatibility
+targetCompatibility = theCompatibility
+
 dependencies {
-  compile 'com.sparkjava:spark-core:2.8.0'
-  compile 'org.mindrot:jbcrypt:0.3m'
-  compile group: 'org.freemarker', name: 'freemarker', version: '2.3.28'
-  compile group: 'org.json', name: 'json', version: '20180813'
-  compile group: 'org.slf4j', name: 'slf4j-simple', version: '1.8.0-beta4'
+  implementation 'com.sparkjava:spark-core:2.9.1'
+  implementation 'org.freemarker:freemarker:2.3.29'
+  implementation 'org.json:json:20190722'
+  implementation 'org.slf4j:slf4j-simple:1.7.28'
+  testImplementation 'org.easymock:easymock:4.0.2'
   testImplementation 'junit:junit:4.12'
 }
 
@@ -27,14 +32,14 @@ eclipse {
 
 jar {
   manifest {
-    attributes 'Main-Class': 'com.calebpower.demo.webstandalone.domain.Core'
+    attributes 'Main-Class': theGroup + '.' + theName
   }
 }
 
 shadowJar {
   shadowJar {
-    baseName = 'WebStandaloneDemo'
+    baseName = theName
     classifier = null
-    version = null
+    version = theVersion
   }
 }
