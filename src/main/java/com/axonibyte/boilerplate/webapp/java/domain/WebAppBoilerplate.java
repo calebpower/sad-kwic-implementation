@@ -1,8 +1,8 @@
-package com.calebpower.demo.webstandalone.domain;
+package com.axonibyte.boilerplate.webapp.java.domain;
 
-import com.calebpower.demo.webstandalone.action.FrontEnd;
-import com.calebpower.demo.webstandalone.action.Prompter;
-import com.calebpower.demo.webstandalone.domain.persistent.Config;
+import com.axonibyte.boilerplate.webapp.java.action.FrontEnd;
+import com.axonibyte.boilerplate.webapp.java.action.Prompter;
+import com.axonibyte.boilerplate.webapp.java.domain.persistent.Config;
 
 /**
  * Demonstration of a stand-alone web application that utilizes a JSON-based
@@ -11,7 +11,7 @@ import com.calebpower.demo.webstandalone.domain.persistent.Config;
  * 
  * @author Caleb L. Power
  */
-public class Core {
+public class WebAppBoilerplate {
   
   private static Config config = null; //configurations and settings
   private static FrontEnd frontEnd = null; //the front end

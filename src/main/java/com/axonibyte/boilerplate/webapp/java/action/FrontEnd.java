@@ -1,4 +1,4 @@
-package com.calebpower.demo.webstandalone.action;
+package com.axonibyte.boilerplate.webapp.java.action;
 
 import static spark.Spark.delete;
 import static spark.Spark.get;
@@ -9,8 +9,8 @@ import static spark.Spark.put;
 import static spark.Spark.staticFiles;
 import static spark.Spark.stop;
 
-import com.calebpower.demo.webstandalone.action.endpoint.DemoEndpoint;
-import com.calebpower.demo.webstandalone.action.endpoint.Endpoint;
+import com.axonibyte.boilerplate.webapp.java.action.endpoint.DemoEndpoint;
+import com.axonibyte.boilerplate.webapp.java.action.endpoint.Endpoint;
 
 /**
  * Front end view; manages all pages and directs traffic to those pages.

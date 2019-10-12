@@ -1,4 +1,4 @@
-package com.calebpower.demo.webstandalone.action;
+package com.axonibyte.boilerplate.webapp.java.action;
 
 import java.io.BufferedReader;
 import java.io.IOException;
