@@ -1,4 +1,4 @@
-package edu.uco.cs.group3_fall2020.kwic.action;
+package edu.uco.cs.group3_spring2020.kwic.action;
 
 import java.io.IOException;
 import java.io.StringWriter;

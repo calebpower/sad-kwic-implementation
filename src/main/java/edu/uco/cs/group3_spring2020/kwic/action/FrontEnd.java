@@ -1,4 +1,4 @@
-package edu.uco.cs.group3_fall2020.kwic.action;
+package edu.uco.cs.group3_spring2020.kwic.action;
 
 import static spark.Spark.delete;
 import static spark.Spark.get;
@@ -9,8 +9,8 @@ import static spark.Spark.put;
 import static spark.Spark.staticFiles;
 import static spark.Spark.stop;
 
-import edu.uco.cs.group3_fall2020.kwic.action.endpoint.DemoEndpoint;
-import edu.uco.cs.group3_fall2020.kwic.action.endpoint.Endpoint;
+import edu.uco.cs.group3_spring2020.kwic.action.endpoint.DemoEndpoint;
+import edu.uco.cs.group3_spring2020.kwic.action.endpoint.Endpoint;
 
 /**
  * Front end view; manages all pages and directs traffic to those pages.

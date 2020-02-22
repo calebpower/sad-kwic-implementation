@@ -1,4 +1,4 @@
-package edu.uco.cs.group3_fall2020.kwic.domain.persistent;
+package edu.uco.cs.group3_spring2020.kwic.domain.persistent;
 
 import org.junit.Test;
 

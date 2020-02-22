@@ -1,6 +1,6 @@
-package edu.uco.cs.group3_fall2020.kwic.action.endpoint;
+package edu.uco.cs.group3_spring2020.kwic.action.endpoint;
 
-import edu.uco.cs.group3_fall2020.kwic.action.HTTPMethod;
+import edu.uco.cs.group3_spring2020.kwic.action.HTTPMethod;
 import spark.ModelAndView;
 import spark.Request;
 import spark.Response;

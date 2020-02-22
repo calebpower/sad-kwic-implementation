@@ -1,6 +1,6 @@
-package edu.uco.cs.group3_fall2020.kwic.domain;
+package edu.uco.cs.group3_spring2020.kwic.domain;
 
-import edu.uco.cs.group3_fall2020.kwic.action.FrontEnd;
+import edu.uco.cs.group3_spring2020.kwic.action.FrontEnd;
 
 /**
  * Demonstration of a stand-alone web application that utilizes a JSON-based
