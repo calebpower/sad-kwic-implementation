@@ -1,4 +1,4 @@
-package com.axonibyte.boilerplate.webapp.java.action;
+package edu.uco.cs.group3_fall2020.kwic.action;
 
 import java.io.IOException;
 import java.io.StringWriter;

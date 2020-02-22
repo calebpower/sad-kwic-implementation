@@ -1,7 +1,6 @@
-package com.axonibyte.boilerplate.webapp.java.action.endpoint;
+package edu.uco.cs.group3_fall2020.kwic.action.endpoint;
 
-import com.axonibyte.boilerplate.webapp.java.action.HTTPMethod;
-
+import edu.uco.cs.group3_fall2020.kwic.action.HTTPMethod;
 import spark.ModelAndView;
 import spark.Request;
 import spark.Response;
@@ -19,7 +18,7 @@ public abstract class Endpoint {
   /**
    * Overloaded constructor to set the request type and the route.
    * 
-   * @param requestType the type of request allows (GET and/or POST)
+   * @param methods the type of request allows (GET and/or POST)
    * @param route the public endpoint
    */
   public Endpoint(String route, HTTPMethod... methods) {

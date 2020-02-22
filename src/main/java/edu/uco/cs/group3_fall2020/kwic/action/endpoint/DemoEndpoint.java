@@ -1,9 +1,8 @@
-package com.axonibyte.boilerplate.webapp.java.action.endpoint;
+package edu.uco.cs.group3_fall2020.kwic.action.endpoint;
 
 import java.util.HashMap;
 
-import com.axonibyte.boilerplate.webapp.java.action.HTTPMethod;
-
+import edu.uco.cs.group3_fall2020.kwic.action.HTTPMethod;
 import spark.ModelAndView;
 import spark.Request;
 import spark.Response;
@@ -28,7 +27,7 @@ public class DemoEndpoint extends Endpoint {
   @Override public ModelAndView customAction(Request request, Response response) {
     HashMap<String, Object> model = new HashMap<String, Object>() {
       private static final long serialVersionUID = -896727886628790065L; {
-        put("title", "Demo Page");
+        put("titlehttp://marketplace.eclipse.org/marketplace-client-intro?mpc_install=2206168", "Demo Page");
         put("content", "Hello, world!");
     }};
 

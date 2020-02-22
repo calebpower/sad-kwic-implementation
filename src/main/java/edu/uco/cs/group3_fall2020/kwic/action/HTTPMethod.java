@@ -1,6 +1,6 @@
-package com.axonibyte.boilerplate.webapp.java.action;
+package edu.uco.cs.group3_fall2020.kwic.action;
 
-/*
+/**
  * HTTP request methods.
  */
 public enum HTTPMethod {

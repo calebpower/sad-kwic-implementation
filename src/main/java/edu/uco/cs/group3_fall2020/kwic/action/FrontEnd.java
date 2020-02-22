@@ -1,4 +1,4 @@
-package com.axonibyte.boilerplate.webapp.java.action;
+package edu.uco.cs.group3_fall2020.kwic.action;
 
 import static spark.Spark.delete;
 import static spark.Spark.get;
@@ -9,8 +9,8 @@ import static spark.Spark.put;
 import static spark.Spark.staticFiles;
 import static spark.Spark.stop;
 
-import com.axonibyte.boilerplate.webapp.java.action.endpoint.DemoEndpoint;
-import com.axonibyte.boilerplate.webapp.java.action.endpoint.Endpoint;
+import edu.uco.cs.group3_fall2020.kwic.action.endpoint.DemoEndpoint;
+import edu.uco.cs.group3_fall2020.kwic.action.endpoint.Endpoint;
 
 /**
  * Front end view; manages all pages and directs traffic to those pages.
@@ -27,21 +27,11 @@ public class FrontEnd implements Runnable {
   private Endpoint endpoints[] = null; //the pages that will be accessible
   
   /**
-   * The request type (limited to GET and/or POST) for a given page.
-   * 
-   * @author Caleb L. Power
-   */
-  public static enum RequestType {
-    GET_ONLY, POST_ONLY, GET_AND_POST
-  }
-
-  /**
    * Opens the specified external port so as to launch the front end.
    * 
    * @param port the port by which the front end will be accessible
    */
   public FrontEnd(int port) {
-    
     this.port = port;
     
     if(freeMarkerEngine == null) freeMarkerEngine = new FreeMarkerEngine(RESPONDER_TEMPLATE_FOLDER);
@@ -51,7 +41,6 @@ public class FrontEnd implements Runnable {
       };
     
     staticFiles.location(RESPONDER_STATIC_FOLDER); //relative to the root of the classpath
-    
   }
 
   /**

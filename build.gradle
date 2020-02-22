@@ -32,7 +32,7 @@ eclipse {
 
 jar {
   manifest {
-    attributes 'Main-Class': theGroup + '.' + theName
+    attributes 'Main-Class': theGroup + '.domain.' + theName
   }
 }
 
