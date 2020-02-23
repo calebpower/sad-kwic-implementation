@@ -36,6 +36,7 @@ public class POSTContentEndpoint extends Endpoint {
    * {@inheritDoc}
    */
   @Override public ModelAndView customAction(Request request, Response response) {
+    System.out.println(String.format("User at %1$s hit the POST content endpoint.", request.ip()));
     JSONObject responseBody = new JSONObject();
     
     try {
