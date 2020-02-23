@@ -10,7 +10,7 @@ $(document).ready(function () {
 
     function addListeners() {
         $("#code").on("input", function () {
-            if ($('.line').html().trim().length < 6) {
+            if (getContent().length === 0) {
                 $('.line').html('&nbsp;')
             }
         });
