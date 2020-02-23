@@ -18,6 +18,9 @@ $(document).ready(function () {
             const content = getContent();
             parseToKWIC(content);
         });
+        $("#clear").on('click', function () {
+          $("#code").html(`<div class="line">&nbsp;</div>`)
+        });
     }
 
     function getContent() {
