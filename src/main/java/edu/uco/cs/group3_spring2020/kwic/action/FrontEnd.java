@@ -9,8 +9,9 @@ import static spark.Spark.put;
 import static spark.Spark.staticFiles;
 import static spark.Spark.stop;
 
-import edu.uco.cs.group3_spring2020.kwic.action.endpoint.DemoEndpoint;
 import edu.uco.cs.group3_spring2020.kwic.action.endpoint.Endpoint;
+import edu.uco.cs.group3_spring2020.kwic.action.endpoint.api.POSTContentEndpoint;
+import edu.uco.cs.group3_spring2020.kwic.action.endpoint.page.GETIndexPage;
 
 /**
  * Front end view; manages all pages and directs traffic to those pages.
@@ -37,7 +38,8 @@ public class FrontEnd implements Runnable {
     if(freeMarkerEngine == null) freeMarkerEngine = new FreeMarkerEngine(RESPONDER_TEMPLATE_FOLDER);
     
     endpoints = new Endpoint[] {
-        new DemoEndpoint()
+        new GETIndexPage(),
+        new POSTContentEndpoint()
       };
     
     staticFiles.location(RESPONDER_STATIC_FOLDER); //relative to the root of the classpath
