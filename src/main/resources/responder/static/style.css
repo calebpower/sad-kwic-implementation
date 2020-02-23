@@ -4,7 +4,112 @@
  * @author Caleb L. Power
  *
  */
-.content {
-  font-weight: bold;
-  text-align: center;
+body{overflow: hidden;
+color: #444 !important
+}
+.header {
+	padding: 15px 10px;
+	background-color: #373D49;
+	height: 50px;
+}
+
+.wpb-wrapper {
+	height: calc(100vh - 100px);
+	position: relative;
+	overflow-y: scroll;
+	z-index: 5;
+	word-wrap: break-word;
+}
+.line-number-bg{
+	background-color: #F5F7FA;
+	height: 100%;
+	width: 50px;
+	position: absolute;
+	border-right: 1px solid #D3DAEA
+}
+.wrapper, .preview {
+	line-height: 1.3em;
+	counter-reset: line;
+	font-family: 'Source Code Pro';
+	font-size: 18px;
+	padding: 15px 0;
+	height: 100%;
+}
+
+.line {
+	display: flex;
+	align-items: center;
+}
+
+
+[contenteditable]:focus {
+    outline: 0px solid transparent;
+	background-color: #F7FAFC;
+}
+.code {
+	width: 100%;
+	height: 100%
+}
+
+.line:before {
+	color: #6f6f6f;
+	counter-increment: line;
+	content: counter(line);
+	width: 2em;
+	text-align: right;
+	display: inline-block;
+	margin-right: 28px;
+	flex: 0 0 auto;
+	z-index: 5;
+}
+
+a {
+	color: #aaa;
+}
+
+.link-title {
+	color: #CE9178;
+}
+
+.punctuation {
+	color: white;
+}
+
+.code-yellow {
+	color: #DCDCAA;
+}
+
+.code-purple {
+	color: #BD7BB8;
+}
+
+.comment {
+	color: #519CD0;
+}
+
+@keyframes blink {
+	0% {
+		opacity: 0;
+	}
+
+	45% {
+		opacity: 0;
+	}
+
+	55% {
+		opacity: 1;
+	}
+
+	100% {
+		opacity: 1;
+	}
+}
+
+.cursor {
+	height: 1em;
+	background: #fff;
+	width: 1px;
+	display: inline-block;
+	margin-bottom: -2px;
+	animation: blink 600ms linear infinite alternate;
 }
