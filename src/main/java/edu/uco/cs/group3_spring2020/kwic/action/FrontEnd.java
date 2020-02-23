@@ -1,7 +1,9 @@
 package edu.uco.cs.group3_spring2020.kwic.action;
 
+import static spark.Spark.before;
 import static spark.Spark.delete;
 import static spark.Spark.get;
+import static spark.Spark.options;
 import static spark.Spark.patch;
 import static spark.Spark.port;
 import static spark.Spark.post;
@@ -52,6 +54,25 @@ public class FrontEnd implements Runnable {
    */
   @Override public void run() {
     port(port);
+    
+    before((request, response) -> {
+      response.header("Access-Control-Allow-Origin", "*");
+      response.header("Access-Control-Allow-Methods", "DELETE, POST, GET, PATCH, PUT, OPTIONS");
+      response.header("Access-Control-Allow-Headers", "Content-Type, Access-Control-Allow-Headers, Access-Control-Allow-Origin, Access-Control-Allow-Methods");
+      response.header("Access-Control-Expose-Headers", "Content-Type, Content-Length");
+    });
+    
+    options("/*", (request, response)-> {
+      String accessControlRequestHeaders = request.headers("Access-Control-Request-Headers");
+      if(accessControlRequestHeaders != null)
+        response.header("Access-Control-Allow-Headers", "Access-Control-Request-Headers");
+      
+      String accessControlRequestMethod = request.headers("Access-Control-Request-Method");
+      if(accessControlRequestMethod != null)
+        response.header("Access-Control-Allow-Methods", "Access-Control-Request-Method");
+
+      return "OK";
+    });
     
     for(Endpoint endpoint : endpoints) { //iterate through initialized pages and determine the appropriate HTTP request types
       for(HTTPMethod method : endpoint.getHTTPMethods()) {

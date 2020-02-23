@@ -33,6 +33,7 @@ public class GETIndexPage extends Endpoint {
         put("content", "Hello, world!");
     }};
 
+    response.header("Content-Type", "text/html");
     return new ModelAndView(model, "index.ftl"); // use the index template to generate the output
   }
 

@@ -68,6 +68,7 @@ public class POSTContentEndpoint extends Endpoint {
         put("body", responseBody.toString(2)); // kick the response back to the user
     }};
 
+    response.header("Content-Type", "application/json");
     return new ModelAndView(model, "raw.ftl"); //use the raw template to generate the output
   }
 
