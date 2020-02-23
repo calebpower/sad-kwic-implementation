@@ -1,7 +1,9 @@
 .classpath
 .git
 .gradle
+.history
 .project
 .settings
+.vscode/
 bin/
 build/
