@@ -9,7 +9,11 @@ $(document).ready(function() {
   }
 
   function addListeners() {
-    $("#code").on("input", function() {});
+    $("#code").on("input", function() {
+      if($('.line').text().trim().length < 6){
+        $('.line').html('&nbsp;')
+      }
+    });
     $("#submit").on('click',function() {
       const content = getContent();
       parseToKWIC(content);

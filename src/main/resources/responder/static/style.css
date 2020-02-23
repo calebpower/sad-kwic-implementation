@@ -21,7 +21,6 @@ body {
   height: calc(100vh - 100px);
   position: relative;
   overflow-y: scroll;
-  z-index: 5;
   word-wrap: break-word;
 }
 .line-number-bg {
@@ -30,6 +29,8 @@ body {
   width: 50px;
   position: absolute;
   border-right: 1px solid #d3daea;
+  z-index: 3;
+
 }
 .wrapper,
 .preview {
@@ -54,6 +55,7 @@ body {
   align-items: center;
   background-color: #f7fafc;
   padding: 5px 0;
+  position: relative;
 }
 
 .line:before {
@@ -67,6 +69,17 @@ body {
   flex: 0 0 auto;
   z-index: 5;
 }
+
+/* .line:after{
+  content: '';
+  position: absolute;
+  top: 5px;
+  left: 62px;
+  width: 1px;
+  height: 60%;
+  background-color: #6f6f6f;
+  animation: blink;
+} */
 
 a {
   color: #aaa;
