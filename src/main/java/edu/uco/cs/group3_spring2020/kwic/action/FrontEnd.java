@@ -12,6 +12,7 @@ import static spark.Spark.stop;
 import edu.uco.cs.group3_spring2020.kwic.action.endpoint.Endpoint;
 import edu.uco.cs.group3_spring2020.kwic.action.endpoint.api.POSTContentEndpoint;
 import edu.uco.cs.group3_spring2020.kwic.action.endpoint.page.GETIndexPage;
+import edu.uco.cs.group3_spring2020.kwic.action.hooks.PostContentHook;
 
 /**
  * Front end view; manages all pages and directs traffic to those pages.
@@ -31,15 +32,16 @@ public class FrontEnd implements Runnable {
    * Opens the specified external port so as to launch the front end.
    * 
    * @param port the port by which the front end will be accessible
+   * @param postContentHook the hook that will pipe user input to the KWIC* pipe
    */
-  public FrontEnd(int port) {
+  public FrontEnd(int port, PostContentHook postContentHook) {
     this.port = port;
     
     if(freeMarkerEngine == null) freeMarkerEngine = new FreeMarkerEngine(RESPONDER_TEMPLATE_FOLDER);
     
     endpoints = new Endpoint[] {
         new GETIndexPage(),
-        new POSTContentEndpoint()
+        new POSTContentEndpoint(postContentHook)
       };
     
     staticFiles.location(RESPONDER_STATIC_FOLDER); //relative to the root of the classpath

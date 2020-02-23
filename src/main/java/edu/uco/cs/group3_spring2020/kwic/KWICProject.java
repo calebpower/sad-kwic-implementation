@@ -1,4 +1,4 @@
-package edu.uco.cs.group3_spring2020.kwic.domain;
+package edu.uco.cs.group3_spring2020.kwic;
 
 import edu.uco.cs.group3_spring2020.kwic.action.FrontEnd;
 
@@ -9,7 +9,7 @@ import edu.uco.cs.group3_spring2020.kwic.action.FrontEnd;
  * 
  * @author Caleb L. Power
  */
-public class KWICHandler {
+public class KWICProject {
   
   private static int UI_PORT = 4567;
   
@@ -23,8 +23,10 @@ public class KWICHandler {
   public static void main(String[] args) {
     
     System.out.println("Launching front end...");
-    frontEnd = new FrontEnd(UI_PORT); //configure the front end
+    frontEnd = new FrontEnd(UI_PORT, null); //configure the front end
     (new Thread(frontEnd)).start(); //run the front end in a different thread
+    
+    
     
     Runtime.getRuntime().addShutdownHook(new Thread() {
       @Override public void run() {
