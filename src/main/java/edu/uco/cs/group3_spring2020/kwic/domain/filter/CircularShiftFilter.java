@@ -27,11 +27,12 @@ public class CircularShiftFilter implements Filter {
       lineCount += input[i].getWords().length;
       shifter.thread = new Thread(shifter);
       shifter.thread.setDaemon(true);
-      shifter.thread.start();
       shifters.add(shifter);
     }
     
     lines = new Line[lineCount];
+    
+    for(Shifter shifter : shifters) shifter.thread.start();
     
     try {
       for(;;) {
