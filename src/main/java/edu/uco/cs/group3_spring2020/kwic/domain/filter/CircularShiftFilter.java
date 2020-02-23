@@ -12,7 +12,7 @@ import edu.uco.cs.group3_spring2020.kwic.domain.token.Word;
  * 
  * @author Caleb L. Power
  */
-public class CircularShiftFilter implements Filter, Runnable {
+public class CircularShiftFilter implements Filter {
   
   List<Shifter> shifters = new ArrayList<>();
   Line[] lines = null;
@@ -43,10 +43,6 @@ public class CircularShiftFilter implements Filter, Runnable {
     } catch(InterruptedException e) { }
     
     return lines;
-  }
-  
-  @Override public void run() {
-    
   }
   
   private class Shifter implements Runnable {
