@@ -18,7 +18,8 @@ public class Line {
     String[] words = line.split("\\s+");
     this.words = new Word[words.length];
     for(int i = 0; i < words.length; i++)
-      this.words[i] = new Word(words[i]);
+      if(!words[i].isBlank())
+        this.words[i] = new Word(words[i].trim());
   }
   
   /**
