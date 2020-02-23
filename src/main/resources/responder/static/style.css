@@ -15,7 +15,7 @@ body {
   height: 50px;
 }
 
-#loader{display: none;}
+.hidden{display: none !important;}
 
 .wpb-wrapper {
   height: calc(100vh - 100px);

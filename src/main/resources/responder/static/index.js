@@ -10,7 +10,7 @@ $(document).ready(function() {
 
   function addListeners() {
     $("#code").on("input", function() {});
-    $("#submit").click(function() {
+    $("#submit").on('click',function() {
       const content = getContent();
       parseToKWIC(content);
     });
@@ -52,14 +52,16 @@ $(document).ready(function() {
         //demo
         setPreviewContent(text)
     }) */
+    // console.log('click')
 
-    $('#loader').css('display','flex')
+    $('#loader').toggleClass('hidden')
     await demoServer();
-    $('#loader').css('display','none')
+    $('#loader').toggleClass('hidden')
     setPreviewContent(text);
   }
 
   function demoServer() {
+
     return new Promise((resolve, reject) => {
       setTimeout(() => {
         resolve(null);
