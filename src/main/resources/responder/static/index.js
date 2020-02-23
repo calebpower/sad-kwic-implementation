@@ -1,75 +1,81 @@
-$(document).ready(function() {
-  start();
+$(document).ready(function () {
+    start();
 
-  const baseUrl = "";
+    const baseUrl = "http://localhost:4567/api/content";
 
-  function start() {
-    $("#code").focus();
-    addListeners();
-  }
+    function start() {
+        $("#code").focus();
+        addListeners();
+    }
 
-  function addListeners() {
-    $("#code").on("input", function() {
-      if($('.line').html().trim().length < 6){
-        $('.line').html('&nbsp;')
-      }
-    });
-    $("#submit").on('click',function() {
-      const content = getContent();
-      parseToKWIC(content);
-    });
-  }
+    function addListeners() {
+        $("#code").on("input", function () {
+            if ($('.line').html().trim().length < 6) {
+                $('.line').html('&nbsp;')
+            }
+        });
+        $("#submit").on('click', function () {
+            const content = getContent();
+            parseToKWIC(content);
+        });
+    }
 
-  function getContent() {
-    // get all lines and push them to content
-    content = "";
-    $(".line").each(function() {
-      content +=
-        $(this)
-          .text()
-          .trim() + "\\n";
-    });
+    function getContent() {
+        // get all lines and push them to content
+        const content = [];
+        $(".line").each(function () {
+            const text = $(this).text().trim()
+            if(text) content.push(text)
+        });
 
-    return content;
-  }
+        return content;
+    }
 
-  function setPreviewContent(text) {
-    $("#preview").text(text);
-  }
+    function setPreviewContent(text) {
+        $("#preview").html(text);
+    }
 
-  async function parseToKWIC(text) {
-    /*     fetch("http://example.com", {
-      method: "post",
-      body: JSON.stringify({ text }),
+    async function parseToKWIC(content) {
+        if(content.length <= 0){
+            showAlert('warning','A valid text input is required')
+            return;
+        }
 
-      headers: {
-        Accept: "application/json",
-      },
+        $('#loader').toggleClass('hidden')
 
-      credentials: "same-origin", // send cookies
-      credentials: "include" // send cookies, even in CORS
-    }).then(data=>{
+        try {
+            const response = await fetch(baseUrl, {
+                method: "post",
+                body: JSON.stringify({lines: content})
+            })
+            const json = await response.json()
+            let lines = ""
 
-    }).catch(error=>{
-        console.error(error)
-    }).finally((txt)=>{
-        //demo
-        setPreviewContent(text)
-    }) */
-    // console.log('click')
+            for (const line of json.lines) {
+                lines += `<div>${tagStripper(line)}</div>`
+            }
+            setPreviewContent(lines);
 
-    $('#loader').toggleClass('hidden')
-    await demoServer();
-    $('#loader').toggleClass('hidden')
-    setPreviewContent(text);
-  }
+        } catch (e) {
+            showAlert('danger',e)
+        } finally {
+            $('#loader').toggleClass('hidden')
+        }
+    }
 
-  function demoServer() {
+    function showAlert(type, msg){
+        $('#alert').html(`
+            <div class="alert alert-${type} alert-dismissible fade show" role="alert">
+                <strong>Error!</strong> ${msg}
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            `)
+    }
 
-    return new Promise((resolve, reject) => {
-      setTimeout(() => {
-        resolve(null);
-      }, 3000);
-    });
-  }
+    // utilities
+    const tagStripper = html => {
+        return html.replace(/<\/?[^>]+(>|$)/g, '');
+    };
 });

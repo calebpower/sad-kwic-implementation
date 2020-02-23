@@ -53,6 +53,7 @@
 			</div>
 		</div>
 	</div>
+	<div id="alert"></div>
 
 	<!-- Optional JavaScript -->
 	<!-- jQuery first, then Popper.js, then Bootstrap JS -->
