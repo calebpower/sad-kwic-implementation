@@ -27,12 +27,25 @@ public class Character {
    * @see ComparisonResult
    */
   public ComparisonResult compareTo(Character c) {
-    if(this.character - c.character < 0)
-      return ComparisonResult.LESS_THAN;
+    char mineLowered = java.lang.Character.toLowerCase(this.character);
+    char theirsLowered = java.lang.Character.toLowerCase(c.character);
     
-    if(this.character - c.character > 0)
-      return ComparisonResult.GREATER_THAN;
+    // reject non-alpha characters
+    if(mineLowered < 'a' || mineLowered > 'z') return ComparisonResult.INVALID_OBJECT;
+    if(theirsLowered < 'a' || theirsLowered > 'z') return ComparisonResult.INVALID_ARGUMENT;
     
+    // potentially same letters, possibly different cases
+    if(mineLowered == theirsLowered) { // convert to lowercase values, depend on ASCII values
+      if(this.character - c.character < 0) return ComparisonResult.GREATER_THAN;
+      if(this.character - c.character > 0) return ComparisonResult.LESS_THAN;
+      return ComparisonResult.EQUAL_TO; // exit early, avoid other comparisons
+    }
+    
+    // different letters
+    if(mineLowered - theirsLowered < 0) return ComparisonResult.LESS_THAN;
+    if(mineLowered - theirsLowered > 0) return ComparisonResult.GREATER_THAN;
+    
+    // whatever, they're the same
     return ComparisonResult.EQUAL_TO;
   }
   

@@ -29,17 +29,16 @@ public class Word {
    * @see ComparisonResult
    */
   public ComparisonResult compareTo(Word w) {
-    int limit = characters.length < w.characters.length
-        ? characters.length : w.characters.length;
-    
-    for(int i = 0; i < limit; i++) {
-      ComparisonResult result = characters[i].compareTo(w.characters[i]);
-      switch(result) {
-      case EQUAL_TO:
-        continue;
-      default:
+    for(int i = 0, j = 0; i < characters.length && j < w.characters.length; j += (i + 1 - i++)) {
+      ComparisonResult result = characters[i].compareTo(w.characters[j]);
+      
+      if(result == ComparisonResult.INVALID_ARGUMENT) i--;
+      else if(result == ComparisonResult.INVALID_OBJECT) j--;
+      else if(result == ComparisonResult.LESS_THAN
+          || result == ComparisonResult.GREATER_THAN)
         return result;
-      }
+      
+      continue;
     }
     
     return characters.length < w.characters.length
