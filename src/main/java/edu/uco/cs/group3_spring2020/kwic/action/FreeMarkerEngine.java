@@ -12,8 +12,6 @@ import spark.TemplateEngine;
 /**
  * FreeMarker engine for hypertext transformations.
  * 
- * @author Alex
- * @author Per Wendel
  * @author Caleb L. Power
  */
 public class FreeMarkerEngine extends TemplateEngine {

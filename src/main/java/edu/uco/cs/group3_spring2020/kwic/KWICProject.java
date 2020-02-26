@@ -5,9 +5,7 @@ import edu.uco.cs.group3_spring2020.kwic.action.hooks.PostContentHook;
 import edu.uco.cs.group3_spring2020.kwic.domain.pipes.KWICPipe;
 
 /**
- * Demonstration of a stand-alone web application that utilizes a JSON-based
- * configuration file, the SparkJava microframework, a custom console prompter,
- * the FreeMarker template engine, and JUnit testing.
+ * Engine to index user-provided lines using KWIC* method.
  * 
  * @author Caleb L. Power
  */
@@ -29,11 +27,12 @@ public class KWICProject {
     kwicPipe = new KWICPipe();
     
     System.out.println("Launching front end...");
-    frontEnd = new FrontEnd(UI_PORT, kwicPipe); //configure the front end
-    (new Thread(frontEnd)).start(); //run the front end in a different thread
+    frontEnd = new FrontEnd(UI_PORT, kwicPipe); // configure the front end
+    (new Thread(frontEnd)).start(); // run the front end in a different thread
     
     System.out.println("Ready!");
     
+    // catch CTRL + C
     Runtime.getRuntime().addShutdownHook(new Thread() {
       @Override public void run() {
         try {

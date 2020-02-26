@@ -26,9 +26,9 @@ public class FrontEnd implements Runnable {
   private static final String RESPONDER_STATIC_FOLDER = "responder/static";
   private static final String RESPONDER_TEMPLATE_FOLDER = "/responder/templates";
   
-  private int port; //the port that the front end should run on
-  private FreeMarkerEngine freeMarkerEngine = null; //the FreeMarker engine
-  private Endpoint endpoints[] = null; //the pages that will be accessible
+  private int port; // the port that the front end should run on
+  private FreeMarkerEngine freeMarkerEngine = null; // the FreeMarker engine
+  private Endpoint endpoints[] = null; // the pages that will be accessible
   
   /**
    * Opens the specified external port so as to launch the front end.
@@ -46,7 +46,7 @@ public class FrontEnd implements Runnable {
         new POSTContentEndpoint(postContentHook)
       };
     
-    staticFiles.location(RESPONDER_STATIC_FOLDER); //relative to the root of the classpath
+    staticFiles.location(RESPONDER_STATIC_FOLDER); // relative to the root of the classpath
   }
 
   /**
@@ -74,7 +74,7 @@ public class FrontEnd implements Runnable {
       return "OK";
     });
     
-    for(Endpoint endpoint : endpoints) { //iterate through initialized pages and determine the appropriate HTTP request types
+    for(Endpoint endpoint : endpoints) { // iterate through initialized pages and determine the appropriate HTTP request types
       for(HTTPMethod method : endpoint.getHTTPMethods()) {
         switch(method) {
         case DELETE:
