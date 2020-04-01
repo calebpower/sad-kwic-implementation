@@ -2,7 +2,7 @@ package edu.uco.cs.group3_spring2020.kwic;
 
 import edu.uco.cs.group3_spring2020.kwic.action.FrontEnd;
 import edu.uco.cs.group3_spring2020.kwic.action.hooks.PostContentHook;
-import edu.uco.cs.group3_spring2020.kwic.domain.pipes.KWICPipe;
+import edu.uco.cs.group3_spring2020.kwic.domain.controllers.MasterController;
 
 /**
  * Engine to index user-provided lines using KWIC* method.
@@ -24,7 +24,7 @@ public class KWICProject {
   public static void main(String[] args) {
     
     System.out.println("Creating KWIC* pipe...");
-    kwicPipe = new KWICPipe();
+    kwicPipe = new MasterController();
     
     System.out.println("Launching front end...");
     frontEnd = new FrontEnd(UI_PORT, kwicPipe); // configure the front end

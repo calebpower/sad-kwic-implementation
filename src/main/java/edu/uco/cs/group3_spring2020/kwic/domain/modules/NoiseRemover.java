@@ -1,4 +1,4 @@
-package edu.uco.cs.group3_spring2020.kwic.domain.filter;
+package edu.uco.cs.group3_spring2020.kwic.domain.modules;
 
 import java.util.HashSet;
 import java.util.LinkedList;
@@ -12,7 +12,7 @@ import edu.uco.cs.group3_spring2020.kwic.domain.token.Line;
  * 
  * @author Caleb L. Power
  */
-public class NoiseRemovingFilter implements Filter {
+public class NoiseRemover implements Filter {
   
   private static Set<String> noiseWords = new HashSet<>() {
     private static final long serialVersionUID = -5073505350485807715L; {
