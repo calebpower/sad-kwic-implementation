@@ -17,6 +17,11 @@ public class CircularShift extends Module {
   List<Shifter> shifters = new ArrayList<>();
   Line[] lines = null;
   
+  /**
+   * Overloaded constructor.
+   * 
+   * @param input the input
+   */
   public CircularShift(Input input) {
     super(input);
   }

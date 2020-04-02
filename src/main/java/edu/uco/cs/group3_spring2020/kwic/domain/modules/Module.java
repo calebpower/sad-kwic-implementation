@@ -1,7 +1,5 @@
 package edu.uco.cs.group3_spring2020.kwic.domain.modules;
 
-import edu.uco.cs.group3_spring2020.kwic.domain.token.Line;
-
 /**
  * Receives some input, modified is, and returns some output.
  * 

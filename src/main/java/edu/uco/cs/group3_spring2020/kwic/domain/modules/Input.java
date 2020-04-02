@@ -1,8 +1,8 @@
 package edu.uco.cs.group3_spring2020.kwic.domain.modules;
 
-import edu.uco.cs.group3_spring2020.kwic.domain.token.Line;
 import org.json.JSONArray;
-import org.json.JSONException;
+
+import edu.uco.cs.group3_spring2020.kwic.domain.token.Line;
 
 /**
  * Read data lines from the input medium and stores them in core

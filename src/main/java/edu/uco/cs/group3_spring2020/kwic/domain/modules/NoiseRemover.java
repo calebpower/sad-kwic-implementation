@@ -14,6 +14,11 @@ import edu.uco.cs.group3_spring2020.kwic.domain.token.Line;
  */
 public class NoiseRemover extends Module {
   
+  /**
+   * Overloaded constructor.
+   * 
+   * @param input the input
+   */
   public NoiseRemover(Input input) {
     super(input);
   }

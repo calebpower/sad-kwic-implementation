@@ -5,7 +5,6 @@ import static org.junit.Assert.assertTrue;
 import java.util.LinkedHashMap;
 
 import org.json.JSONArray;
-import org.junit.Ignore;
 import org.junit.Test;
 
 import edu.uco.cs.group3_spring2020.kwic.action.hooks.PostContentHook;

@@ -13,7 +13,12 @@ import edu.uco.cs.group3_spring2020.kwic.domain.token.Line;
 public class Alphabetizer extends Module {
   
   Line[] lines = null;
-  
+
+  /**
+   * Overloaded constructor.
+   * 
+   * @param input the input
+   */
   public Alphabetizer(Input input) {
     super(input);
   }
