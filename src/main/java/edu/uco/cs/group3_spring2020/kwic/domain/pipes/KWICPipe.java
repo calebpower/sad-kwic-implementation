@@ -7,6 +7,7 @@ import edu.uco.cs.group3_spring2020.kwic.action.hooks.PostContentHook;
 import edu.uco.cs.group3_spring2020.kwic.domain.filter.AlphabetizeFilter;
 import edu.uco.cs.group3_spring2020.kwic.domain.filter.CircularShiftFilter;
 import edu.uco.cs.group3_spring2020.kwic.domain.filter.Filter;
+import edu.uco.cs.group3_spring2020.kwic.domain.filter.NoiseRemovalFilter;
 import edu.uco.cs.group3_spring2020.kwic.domain.token.Line;
 
 /**
@@ -29,7 +30,8 @@ public class KWICPipe implements PostContentHook {
     
     final Filter[] filters = new Filter[] { // collect the filters
         new CircularShiftFilter(), // circular shift filter
-        new AlphabetizeFilter() // alphabetizing filter
+        new AlphabetizeFilter(), // alphabetizing filter
+        new NoiseRemovalFilter()
     };
     
     for(Filter filter : filters) // filter the lines

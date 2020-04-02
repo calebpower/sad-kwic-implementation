@@ -31,11 +31,11 @@ public class KWICPipeTest {
         .put("blah third test blah")
         .put("first test this is the")
         .put("here's another test")
-        .put("is the first test this")
+        // .put("is the first test this")
         .put("test blah blah third")
         .put("test here's another")
         .put("test this is the first")
-        .put("the first test this is")
+        // .put("the first test this is")
         .put("third test blah blah")
         .put("this is the first test");
     
