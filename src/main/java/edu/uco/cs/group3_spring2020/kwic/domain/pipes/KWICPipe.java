@@ -20,6 +20,8 @@ public class KWICPipe implements PostContentHook {
    * {@inheritDoc}
    */
   @Override public JSONArray pipe(JSONArray input) throws JSONException {
+    long startTime = System.currentTimeMillis();
+    
     Line[] lines = new Line[input.length()]; // create an empty array of lines
     
     for(int i = 0; i < lines.length; i++) // deserialize the JSON
@@ -36,6 +38,9 @@ public class KWICPipe implements PostContentHook {
     JSONArray output = new JSONArray(); // create empty output
     for(Line line : lines) // serialize the output
       output.put(line.toString());
+    
+    long stopTime = System.currentTimeMillis();
+    System.out.println("Operation completed in " + (stopTime - startTime) + " milliseconds.");
     
     return output; // return the output
   }
