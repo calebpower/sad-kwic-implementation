@@ -12,7 +12,7 @@ import edu.uco.cs.group3_spring2020.kwic.domain.token.Word;
  * 
  * @author Caleb L. Power
  */
-public class CircularShift implements Filter {
+public class CircularShift implements Module {
   
   List<Shifter> shifters = new ArrayList<>();
   Line[] lines = null;
@@ -20,7 +20,7 @@ public class CircularShift implements Filter {
   /**
    * Takes individual words as input and returns circularly-shifted lines.
    */
-  @Override public Line[] filter(Line[] input) {
+  @Override public Line[] transform(Line[] input) {
     int lineCount = 0;
     for(int i = 0; i < input.length; i++) {
       Shifter shifter = new Shifter(lines, input[i], lineCount);

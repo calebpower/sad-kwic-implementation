@@ -10,14 +10,14 @@ import edu.uco.cs.group3_spring2020.kwic.domain.token.Line;
  * 
  * @author Caleb L. Power
  */
-public class Alphabetizer implements Filter {
+public class Alphabetizer implements Module {
   
   Line[] lines = null;
   
   /**
    * Takes lines and returns them in an ordered fashion.
    */
-  @Override public Line[] filter(Line[] input) {
+  @Override public Line[] transform(Line[] input) {
     lines = new Line[input.length];
     Sorter sorter = new Sorter(input, lines, 0, input.length - 1);
     sorter.thread = new Thread(sorter);

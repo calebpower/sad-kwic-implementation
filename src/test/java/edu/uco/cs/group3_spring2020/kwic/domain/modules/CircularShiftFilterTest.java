@@ -45,8 +45,8 @@ public class CircularShiftFilterTest {
         new Line("yz89 abcde 12345 67wx")
     };
     
-    Filter filter = new CircularShift();
-    Line[] testOutput = filter.filter(testInput);
+    Module module = new CircularShift();
+    Line[] testOutput = module.transform(testInput);
     
     new LinkedHashMap<String, Line[]>() {
       private static final long serialVersionUID = 8260832695616525319L; {

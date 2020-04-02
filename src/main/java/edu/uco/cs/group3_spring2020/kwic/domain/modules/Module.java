@@ -7,7 +7,7 @@ import edu.uco.cs.group3_spring2020.kwic.domain.token.Line;
  * 
  * @author Caleb L. Power
  */
-public interface Filter {
+public interface Module {
   
   /**
    * Filters input through some filtering mechanism.
@@ -15,6 +15,6 @@ public interface Filter {
    * @param lines a list of strings to denote the input
    * @return a list of strings to denote the output
    */
-  public Line[] filter(Line[] lines);
+  public Line[] transform(Line[] lines);
   
 }

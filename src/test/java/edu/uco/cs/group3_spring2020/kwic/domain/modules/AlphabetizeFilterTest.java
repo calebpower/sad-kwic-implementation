@@ -49,8 +49,8 @@ public class AlphabetizeFilterTest {
         new Line("this is the first test")
     };
     
-    Filter filter = new Alphabetizer();
-    Line[] testOutput = filter.filter(testInput);
+    Module module = new Alphabetizer();
+    Line[] testOutput = module.transform(testInput);
     
     new LinkedHashMap<String, Line[]>() {
       private static final long serialVersionUID = -3203518313748115804L; {
