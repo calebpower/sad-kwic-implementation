@@ -22,6 +22,7 @@ public class MasterController implements PostContentHook {
    * {@inheritDoc}
    */
   @Override public Output dispatch(JSONArray dataInput) throws JSONException {
+    final long startTime = System.currentTimeMillis();
     Input input = new Input(dataInput);
     
     final Module[] modules = new Module[] { // collect the modules
@@ -32,10 +33,10 @@ public class MasterController implements PostContentHook {
     
     for(Module module : modules) // transform the lines
       module.transform();
-    
-    //Output output = new Output(input.getLines());
 
-   //return output.getOutput(); // return the output
+    final long stopTime = System.currentTimeMillis();
+    System.out.println("Operation completed in " + (stopTime - startTime) + " milliseconds.");
+    
     return new Output(input);
   }
 
