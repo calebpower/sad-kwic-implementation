@@ -7,14 +7,22 @@ import edu.uco.cs.group3_spring2020.kwic.domain.token.Line;
  * 
  * @author Caleb L. Power
  */
-public interface Module {
+public abstract class Module {
+  
+  protected Input input = null;
   
   /**
-   * Filters input through some filtering mechanism.
+   * Overloaded constructor to set the input
    * 
-   * @param lines a list of strings to denote the input
-   * @return a list of strings to denote the output
+   * @param input the input
    */
-  public Line[] transform(Line[] lines);
+  public Module(Input input) {
+    this.input = input;
+  }
+  
+  /**
+   * Transforms input.
+   */
+  public abstract void transform();
   
 }

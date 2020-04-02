@@ -17,6 +17,6 @@ public interface PostContentHook {
    * @return the line-by-line output in a JSON array of strings
    * @throws JSONException if the user input is bad
    */
-  public JSONArray pipe(JSONArray input) throws JSONException;
+  public JSONArray dispatch(JSONArray input) throws JSONException;
   
 }

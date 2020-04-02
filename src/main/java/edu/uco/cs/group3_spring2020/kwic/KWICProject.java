@@ -14,7 +14,7 @@ public class KWICProject {
   private static int UI_PORT = 4567;
   
   private static FrontEnd frontEnd = null; // the front end
-  private static PostContentHook kwicPipe = null; // the KWIC* pipe
+  private static PostContentHook masterController = null; // the KWIC* master controller
   
   /**
    * Entry point for the program.
@@ -23,11 +23,11 @@ public class KWICProject {
    */
   public static void main(String[] args) {
     
-    System.out.println("Creating KWIC* pipe...");
-    kwicPipe = new MasterController();
+    System.out.println("Creating KWIC* master controller...");
+    masterController = new MasterController();
     
     System.out.println("Launching front end...");
-    frontEnd = new FrontEnd(UI_PORT, kwicPipe); // configure the front end
+    frontEnd = new FrontEnd(UI_PORT, masterController); // configure the front end
     (new Thread(frontEnd)).start(); // run the front end in a different thread
     
     System.out.println("Ready!");

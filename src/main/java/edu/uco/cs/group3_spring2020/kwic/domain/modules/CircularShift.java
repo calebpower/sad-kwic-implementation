@@ -12,19 +12,23 @@ import edu.uco.cs.group3_spring2020.kwic.domain.token.Word;
  * 
  * @author Caleb L. Power
  */
-public class CircularShift implements Module {
+public class CircularShift extends Module {
   
   List<Shifter> shifters = new ArrayList<>();
   Line[] lines = null;
   
+  public CircularShift(Input input) {
+    super(input);
+  }
+  
   /**
    * Takes individual words as input and returns circularly-shifted lines.
    */
-  @Override public Line[] transform(Line[] input) {
+  @Override public void transform() {
     int lineCount = 0;
-    for(int i = 0; i < input.length; i++) {
-      Shifter shifter = new Shifter(lines, input[i], lineCount);
-      lineCount += input[i].getWords().length;
+    for(int i = 0; i < input.lines.length; i++) {
+      Shifter shifter = new Shifter(lines, input.lines[i], lineCount);
+      lineCount += input.lines[i].getWords().length;
       shifter.thread = new Thread(shifter);
       shifter.thread.setDaemon(true);
       shifters.add(shifter);
@@ -43,7 +47,7 @@ public class CircularShift implements Module {
       }
     } catch(InterruptedException e) { }
     
-    return lines;
+    input.lines = lines;
   }
   
   private class Shifter implements Runnable {

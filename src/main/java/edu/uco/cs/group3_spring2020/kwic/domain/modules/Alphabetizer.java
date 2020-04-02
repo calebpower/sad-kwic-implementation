@@ -10,16 +10,20 @@ import edu.uco.cs.group3_spring2020.kwic.domain.token.Line;
  * 
  * @author Caleb L. Power
  */
-public class Alphabetizer implements Module {
+public class Alphabetizer extends Module {
   
   Line[] lines = null;
+  
+  public Alphabetizer(Input input) {
+    super(input);
+  }
   
   /**
    * Takes lines and returns them in an ordered fashion.
    */
-  @Override public Line[] transform(Line[] input) {
-    lines = new Line[input.length];
-    Sorter sorter = new Sorter(input, lines, 0, input.length - 1);
+  @Override public void transform() {
+    lines = new Line[input.lines.length];
+    Sorter sorter = new Sorter(input.lines, lines, 0, input.lines.length - 1);
     sorter.thread = new Thread(sorter);
     sorter.thread.setDaemon(true);
     sorter.thread.start();
@@ -28,7 +32,7 @@ public class Alphabetizer implements Module {
       while(!sorter.done.get()) Thread.sleep(100L);
     } catch(InterruptedException e) { }
     
-    return lines;
+    input.lines = lines;
   }
   
   private class Sorter implements Runnable {

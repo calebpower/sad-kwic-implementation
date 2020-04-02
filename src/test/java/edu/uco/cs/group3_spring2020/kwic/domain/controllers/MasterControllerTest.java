@@ -5,6 +5,7 @@ import static org.junit.Assert.assertTrue;
 import java.util.LinkedHashMap;
 
 import org.json.JSONArray;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import edu.uco.cs.group3_spring2020.kwic.action.hooks.PostContentHook;
@@ -14,7 +15,7 @@ import edu.uco.cs.group3_spring2020.kwic.action.hooks.PostContentHook;
  * 
  * @author Caleb L. Power
  */
-public class KWICPipeTest {
+public class MasterControllerTest {
   
   /**
    * Tests the KWIC* piping mechanism.
@@ -31,16 +32,16 @@ public class KWICPipeTest {
         .put("blah third test blah")
         .put("first test this is the")
         .put("here's another test")
-        .put("is the first test this")
+        // .put("is the first test this")
         .put("test blah blah third")
         .put("test here's another")
         .put("test this is the first")
-        .put("the first test this is")
+        // .put("the first test this is")
         .put("third test blah blah")
         .put("this is the first test");
     
-    final PostContentHook pipe = new MasterController();
-    JSONArray testOutput = pipe.pipe(testInput);
+    final PostContentHook controller = new MasterController();
+    JSONArray testOutput = controller.dispatch(testInput);
     
     new LinkedHashMap<String, JSONArray>() {
       private static final long serialVersionUID = -7225417351480410157L; {

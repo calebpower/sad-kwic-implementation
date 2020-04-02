@@ -49,14 +49,16 @@ public class AlphabetizeFilterTest {
         new Line("this is the first test")
     };
     
-    Module module = new Alphabetizer();
-    Line[] testOutput = module.transform(testInput);
+    Input input = new Input(null);
+    input.lines = testInput;
+    Module module = new Alphabetizer(input);
+    module.transform();
     
     new LinkedHashMap<String, Line[]>() {
       private static final long serialVersionUID = -3203518313748115804L; {
         put("Test Input", testInput);
         put("Expected Output", expectedOutput);
-        put("Test Output", testOutput);
+        put("Test Output", input.lines);
     }}.forEach((k, v) -> {
       System.out.println("\n" + k + ":");
       for(int i = 0; i < v.length; i++)
@@ -64,11 +66,11 @@ public class AlphabetizeFilterTest {
     });
     
     assertTrue("Alphabetized output should have an appropriate number of lines.",
-        expectedOutput.length == testOutput.length);
+        expectedOutput.length == input.lines.length);
     
     for(int i = 0; i < expectedOutput.length; i++) {
       assertTrue("Line " + i + " of the test output should match line " + i + " of the expected output.",
-          expectedOutput[i].toString().equals(testOutput[i].toString()));
+          expectedOutput[i].toString().equals(input.lines[i].toString()));
     }
   }
 }
