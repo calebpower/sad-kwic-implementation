@@ -5,7 +5,7 @@ import org.json.JSONException;
 
 import edu.uco.cs.group3_spring2020.kwic.action.hooks.PostContentHook;
 import edu.uco.cs.group3_spring2020.kwic.domain.modules.Alphabetizer;
-import edu.uco.cs.group3_spring2020.kwic.domain.modules.CircularShift;
+import edu.uco.cs.group3_spring2020.kwic.domain.modules.CircularShifter;
 import edu.uco.cs.group3_spring2020.kwic.domain.modules.Input;
 import edu.uco.cs.group3_spring2020.kwic.domain.modules.Module;
 import edu.uco.cs.group3_spring2020.kwic.domain.modules.NoiseRemover;
@@ -25,7 +25,7 @@ public class MasterController implements PostContentHook {
     Input input = new Input(dataInput);
     
     final Module[] modules = new Module[] { // collect the modules
-        new CircularShift(input), // circular shift module
+        new CircularShifter(input), // circular shift module
         new Alphabetizer(input), // alphabetizer module
         new NoiseRemover(input) // noise remover module
     };

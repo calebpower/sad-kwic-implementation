@@ -12,7 +12,7 @@ import edu.uco.cs.group3_spring2020.kwic.domain.token.Word;
  * 
  * @author Caleb L. Power
  */
-public class CircularShift extends Module {
+public class CircularShifter extends Module {
   
   List<Shifter> shifters = new ArrayList<>();
   Line[] lines = null;
@@ -22,7 +22,7 @@ public class CircularShift extends Module {
    * 
    * @param input the input
    */
-  public CircularShift(Input input) {
+  public CircularShifter(Input input) {
     super(input);
   }
   
