@@ -18,6 +18,7 @@ sourceCompatibility = theCompatibility
 targetCompatibility = theCompatibility
 
 dependencies {
+  implementation files('../api/build/libs/kwic-api-3.0.0.jar')
   implementation 'com.bitbucket.axonibyte:BoneMesh:2.0.1'
   implementation 'org.json:json:20190722'
   testImplementation 'org.easymock:easymock:4.0.2'
