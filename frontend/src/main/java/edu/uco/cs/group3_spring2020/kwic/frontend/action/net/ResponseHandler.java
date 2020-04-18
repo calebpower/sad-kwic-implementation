@@ -7,6 +7,7 @@ import com.axonibyte.bonemesh.listener.DataListener;
 
 import edu.uco.cs.group3_spring2020.kwic.api.message.MessageType;
 import edu.uco.cs.group3_spring2020.kwic.api.message.SearchResponse;
+import edu.uco.cs.group3_spring2020.kwic.frontend.KWICFrontend;
 import edu.uco.cs.group3_spring2020.kwic.frontend.action.hooks.SearchContentHook;
 
 /**
@@ -39,19 +40,23 @@ public class ResponseHandler implements DataListener {
         if(type != null) {
           switch(type) {
           case SEARCH_RESPONSE:
-            if(searchContentHook == null) System.err.println("Hook to handle search response not found.");
-            else searchContentHook.onQueryResponse(new SearchResponse(message));
+            if(searchContentHook == null) KWICFrontend.getLogger().onInfo("RESPONSE_HANDLER", "Hook to handle search response not found.");
+            else if(searchContentHook.onQueryResponse(new SearchResponse(message)))
+              KWICFrontend.getLogger().onInfo("RESPONSE_HANDLER", "Successfully posted a query response.");
+            else
+              KWICFrontend.getLogger().onError("RESPONSE_HANDLER", "Caught a query response we didn't ask for.");
             break;
           default:
-            System.err.printf("This platform was not designed to handle messages of type '%1$s'.", type.toString());
+            KWICFrontend.getLogger().onError("RESPONSE_HANDLER",
+                String.format("This platform was not designed to handle messages of type '%1$s'.", type.toString()));
           }
           return;
         }
       }
       
-      System.err.println("Message did not have a valid type.");
+      KWICFrontend.getLogger().onError("RESPONSE_HANDLER", "Message did not have a valid type.");
     } catch(JSONException e) {
-      System.err.println("Could not parse incoming message: " + e.getMessage());
+      KWICFrontend.getLogger().onError("RESPONSE_HANDLER", "Could not parse incoming message: " + e.getMessage());
     }
   }
 

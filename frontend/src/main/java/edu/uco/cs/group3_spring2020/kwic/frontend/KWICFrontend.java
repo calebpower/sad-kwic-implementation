@@ -29,42 +29,50 @@ public class KWICFrontend {
    * @param args command-line arguments
    */
   public static void main(String[] args) {
-    
     logHandler = new LogHandler();
-    logHandler.onInfo("FRONTEND", "Instantiating modules...");
-    requestDispatcher = new RequestDispatcher();
-    responseHandler = new ResponseHandler();
-    frontEnd = new FrontEnd(UI_PORT, requestDispatcher, requestDispatcher);
-    
-    logHandler.onInfo("FRONTEND", "Enabling network connectivity...");
-    boneMesh = BoneMesh.build("kwic-frontend", BONEMESH_PORT);
-    
-    logHandler.onInfo("FRONTEND", "Linking modules...");
-    boneMesh.addLogListener(logHandler);
-    responseHandler.setSetLinesHook(requestDispatcher);
-    requestDispatcher.linkBoneMesh(boneMesh);
-    boneMesh.addDataListener(responseHandler);
-    
-    logHandler.onInfo("FRONTEND", "Loading UI...");
-    (new Thread(frontEnd)).start(); // run the front end in a different thread
-    
-    logHandler.onInfo("FRONTEND", "Ready!");
-    
-    // catch CTRL + C
-    Runtime.getRuntime().addShutdownHook(new Thread() {
-      @Override public void run() {
-        try {
-          logHandler.onInfo("FRONTEND", "Spinning down...");
-          frontEnd.halt();
-          boneMesh.kill();
-          Thread.sleep(1000);
-        } catch(InterruptedException e) {
-          Thread.currentThread().interrupt();
-        } finally {
-          logHandler.onInfo("FRONTEND", "Goodbye!");
+    try {
+      logHandler.onInfo("FRONTEND", "Instantiating modules...");
+      requestDispatcher = new RequestDispatcher();
+      responseHandler = new ResponseHandler();
+      frontEnd = new FrontEnd(UI_PORT, requestDispatcher, requestDispatcher);
+      
+      logHandler.onInfo("FRONTEND", "Enabling network connectivity...");
+      boneMesh = BoneMesh.build("kwic-frontend", BONEMESH_PORT);
+      boneMesh.addNode("kwic-backend", "127.0.0.1:8457");
+      
+      logHandler.onInfo("FRONTEND", "Linking modules...");
+      boneMesh.addLogListener(logHandler);
+      responseHandler.setSetLinesHook(requestDispatcher);
+      requestDispatcher.linkBoneMesh(boneMesh);
+      boneMesh.addDataListener(responseHandler);
+      
+      logHandler.onInfo("FRONTEND", "Loading UI...");
+      (new Thread(frontEnd)).start(); // run the front end in a different thread
+      
+      logHandler.onInfo("FRONTEND", "Ready!");
+      
+      // catch CTRL + C
+      Runtime.getRuntime().addShutdownHook(new Thread() {
+        @Override public void run() {
+          try {
+            logHandler.onInfo("FRONTEND", "Spinning down...");
+            frontEnd.halt();
+            boneMesh.removeNode("kwic-backend");
+            boneMesh.removeDataListener(responseHandler);
+            boneMesh.removeLogListener(logHandler);
+            boneMesh.kill();
+            Thread.sleep(1000);
+          } catch(InterruptedException e) {
+            Thread.currentThread().interrupt();
+          } finally {
+            logHandler.onInfo("FRONTEND", "Goodbye!");
+          }
         }
-      }
-    });
+      });
+    
+    } catch(Exception e) {
+      logHandler.onError("FRONTEND", "Some exception was thrown: " + e.getMessage());
+    }
   }
   
   /**

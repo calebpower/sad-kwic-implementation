@@ -10,6 +10,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import edu.uco.cs.group3_spring2020.kwic.api.Entry;
+import edu.uco.cs.group3_spring2020.kwic.frontend.KWICFrontend;
 import edu.uco.cs.group3_spring2020.kwic.frontend.action.HTTPMethod;
 import edu.uco.cs.group3_spring2020.kwic.frontend.action.endpoint.Endpoint;
 import edu.uco.cs.group3_spring2020.kwic.frontend.action.hooks.SetContentHook;
@@ -48,7 +49,7 @@ public class POSTContentEndpoint extends Endpoint {
    * {@inheritDoc}
    */
   @Override public ModelAndView customAction(Request request, Response response) {
-    System.out.println(String.format("User at %1$s hit the POST content endpoint.", request.ip()));
+    KWICFrontend.getLogger().onInfo("ENDPOINT", String.format("User at %1$s hit the POST content endpoint.", request.ip()));
     JSONObject responseBody = new JSONObject();
     
     try {

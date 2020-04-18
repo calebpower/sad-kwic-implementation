@@ -46,7 +46,7 @@ public class KWICBackend {
     boneMesh.addDataListener(dataHandler);
     
     logHandler.onInfo("BACKEND", "Ready!");
-    
+
     // catch CTRL + C
     Runtime.getRuntime().addShutdownHook(new Thread() {
       @Override public void run() {
@@ -61,6 +61,12 @@ public class KWICBackend {
         }
       }
     });
+    
+    try {
+      while(!Thread.interrupted())
+        Thread.sleep(1000L);
+    } catch(InterruptedException e) { }
+    
   }
   
   /**

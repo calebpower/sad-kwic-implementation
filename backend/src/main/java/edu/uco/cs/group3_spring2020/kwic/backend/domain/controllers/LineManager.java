@@ -12,6 +12,7 @@ import org.json.JSONException;
 import edu.uco.cs.group3_spring2020.kwic.api.Entry;
 import edu.uco.cs.group3_spring2020.kwic.api.message.SearchRequest;
 import edu.uco.cs.group3_spring2020.kwic.api.message.SetEntriesRequest;
+import edu.uco.cs.group3_spring2020.kwic.backend.KWICBackend;
 import edu.uco.cs.group3_spring2020.kwic.backend.action.hooks.InitiateSearchHook;
 import edu.uco.cs.group3_spring2020.kwic.backend.action.hooks.SearchResponseHook;
 import edu.uco.cs.group3_spring2020.kwic.backend.action.hooks.SetLinesHook;
@@ -83,7 +84,7 @@ public class LineManager implements InitiateSearchHook, SetLinesHook {
     }
     
     final long stopTime = System.currentTimeMillis();
-    System.out.println("SET operation completed in " + (stopTime - startTime) + " milliseconds.");
+    KWICBackend.getLogger().onInfo("LINE_MANAGER", "SET operation completed in " + (stopTime - startTime) + " milliseconds.");
   }
   
   /**
@@ -120,7 +121,7 @@ public class LineManager implements InitiateSearchHook, SetLinesHook {
     }
     
     long stopTime = System.currentTimeMillis();
-    System.out.println("SEARCH operation completed in " + (stopTime - startTime) + " milliseconds.");
+    KWICBackend.getLogger().onInfo("LINE_MANAGER", "SEARCH operation completed in " + (stopTime - startTime) + " milliseconds.");
     
     if(searchResponseHook != null)
       searchResponseHook.deploySearchResponse(results);

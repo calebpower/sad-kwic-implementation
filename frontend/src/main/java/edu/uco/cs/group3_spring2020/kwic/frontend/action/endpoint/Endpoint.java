@@ -1,5 +1,6 @@
 package edu.uco.cs.group3_spring2020.kwic.frontend.action.endpoint;
 
+import edu.uco.cs.group3_spring2020.kwic.frontend.KWICFrontend;
 import edu.uco.cs.group3_spring2020.kwic.frontend.action.HTTPMethod;
 import spark.ModelAndView;
 import spark.Request;
@@ -52,6 +53,9 @@ public abstract class Endpoint {
    * @return ModelAndView containing the HTTP response (often in JSON)
    */
   public ModelAndView action(Request request, Response response) {
+    KWICFrontend.getLogger().onDebug("ENDPOINT",
+        String.format("User at %1$s got response code %2$d for enpdoint %3$s",
+            request.ip(), request.pathInfo(), response.status()));
     return customAction(request, response);
   }
   

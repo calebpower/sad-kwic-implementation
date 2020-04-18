@@ -1,8 +1,11 @@
 @echo off
 cd api
-call gradlew.bat clean shadowJar --refresh-dependencies --info
+rem call gradlew.bat clean shadowJar --refresh-dependencies --info
+call gradlew.bat clean shadowJar
 cd ..\backend
-call gradlew.bat clean shadowJar --refresh-dependencies --info
+rem call gradlew.bat clean shadowJar --refresh-dependencies --info
+call gradlew.bat clean shadowJar
 cd ..\frontend
-call gradlew.bat clean shadowJar --refresh-dependencies --info
+rem call gradlew.bat clean shadowJar --refresh-dependencies --info
+call gradlew.bat clean shadowJar
 cd ..

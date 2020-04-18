@@ -8,6 +8,7 @@ import com.axonibyte.bonemesh.listener.DataListener;
 import edu.uco.cs.group3_spring2020.kwic.api.message.MessageType;
 import edu.uco.cs.group3_spring2020.kwic.api.message.SearchRequest;
 import edu.uco.cs.group3_spring2020.kwic.api.message.SetEntriesRequest;
+import edu.uco.cs.group3_spring2020.kwic.backend.KWICBackend;
 import edu.uco.cs.group3_spring2020.kwic.backend.action.hooks.InitiateSearchHook;
 import edu.uco.cs.group3_spring2020.kwic.backend.action.hooks.SetLinesHook;
 
@@ -53,23 +54,23 @@ public class DataHandler implements DataListener {
         if(type != null) {
           switch(type) {
           case SET_LINES_REQUEST:
-            if(setLinesHook == null) System.err.println("Hook to set lines not found.");
+            if(setLinesHook == null) KWICBackend.getLogger().onError("DATA_HANDLER", "Hook to set lines not found.");
             else setLinesHook.setEntries(new SetEntriesRequest(message));
             break;
           case SEARCH_REQUEST:
-            if(initiateSearchHook == null) System.err.println("Hook to initiate search not found.");
+            if(initiateSearchHook == null) KWICBackend.getLogger().onError("DATA_HANDLER", "Hook to initiate search not found.");
             else initiateSearchHook.search(new SearchRequest(message));
             break;
           default:
-            System.err.printf("This platform was not designed to handle messages of type '%1$s'.", type.toString());
+            KWICBackend.getLogger().onError("DATA_HANDLER", String.format("This platform was not designed to handle messages of type '%1$s'.", type.toString()));
           }
           return;
         }
       }
       
-      System.err.println("Message did not have a valid type.");
+      KWICBackend.getLogger().onError("DATA_HANDLER", "Message did not have a valid type.");
     } catch(JSONException e) {
-      System.err.println("Could not parse incoming message: " + e.getMessage());
+      KWICBackend.getLogger().onError("DATA_HANDLER", "Could not parse incoming message: " + e.getMessage());
     }
   }
 
