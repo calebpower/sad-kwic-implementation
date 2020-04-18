@@ -4,6 +4,7 @@ import java.util.Set;
 import java.util.UUID;
 
 import edu.uco.cs.group3_spring2020.kwic.api.Entry;
+import edu.uco.cs.group3_spring2020.kwic.api.message.SearchResponse;
 
 /**
  * A hook to search for content.
@@ -19,7 +20,7 @@ public interface SearchContentHook {
    * @return the tracking ID if dispatch was successful,
    *         or <code>null</code> if not
    */
-  public UUID dispatch(Set<String> keywords);
+  public UUID dispatchQuery(Set<String> keywords);
   
   /**
    * Retrieves the results or times out.
@@ -28,15 +29,14 @@ public interface SearchContentHook {
    * @param timeout the time we're willing to wait, in seconds
    * @return a set of entries if successful, or <code>null</code> if not
    */
-  public Set<Entry> getResults(UUID uuid, int timeout);
+  public Set<Entry> getQueryResults(UUID uuid, int timeout);
   
   /**
    * Triggers a response to a query if one is necessary.
    * 
-   * @param uuid the tracking ID
-   * @param entries the query response
+   * @param response the response
    * @return <code>true</code> iff a response was necessary
    */
-  public boolean onResponse(UUID uuid, Set<Entry> entries);
+  public boolean onQueryResponse(SearchResponse response);
   
 }

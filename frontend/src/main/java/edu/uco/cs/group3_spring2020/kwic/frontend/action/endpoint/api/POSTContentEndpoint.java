@@ -58,7 +58,7 @@ public class POSTContentEndpoint extends Endpoint {
       for(Object o : entryArray)
         entries.add(new Entry((JSONObject)o));
       
-      if(hook.dispatch(entries)) { // pass the input to the hook
+      if(hook.dispatchNewContent(entries)) { // pass the input to the hook
         responseBody // if we get here, everything's probably going to be okay
             .put("status", "ok")
             .put("info", "Request successful.");

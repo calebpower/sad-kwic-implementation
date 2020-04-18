@@ -1,7 +1,11 @@
 package edu.uco.cs.group3_spring2020.kwic.frontend;
 
+import com.axonibyte.bonemesh.BoneMesh;
+
+import edu.uco.cs.group3_spring2020.kwic.api.LogHandler;
 import edu.uco.cs.group3_spring2020.kwic.frontend.action.FrontEnd;
-import edu.uco.cs.group3_spring2020.kwic.frontend.action.hooks.SetContentHook;
+import edu.uco.cs.group3_spring2020.kwic.frontend.action.net.RequestDispatcher;
+import edu.uco.cs.group3_spring2020.kwic.frontend.action.net.ResponseHandler;
 
 /**
  * Engine to index user-provided lines using KWIC* method.
@@ -10,10 +14,14 @@ import edu.uco.cs.group3_spring2020.kwic.frontend.action.hooks.SetContentHook;
  */
 public class KWICFrontend {
   
-  private static int UI_PORT = 4567;
+  private static final int BONEMESH_PORT = 9568;
+  private static final int UI_PORT = 9569;
   
+  private static BoneMesh boneMesh = null; // BoneMesh v2
   private static FrontEnd frontEnd = null; // the front end
-  private static SetContentHook masterController = null; // the KWIC* master controller
+  private static LogHandler logHandler = null; // the logger
+  private static RequestDispatcher requestDispatcher = null; // the request dispatcher
+  private static ResponseHandler responseHandler = null; // the incoming response handler
   
   /**
    * Entry point for the program.
@@ -22,31 +30,50 @@ public class KWICFrontend {
    */
   public static void main(String[] args) {
     
-    System.out.println("Creating KWIC* master controller...");
-    //masterController = new MasterController();
+    logHandler = new LogHandler();
+    logHandler.onInfo("FRONTEND", "Instantiating modules...");
+    requestDispatcher = new RequestDispatcher();
+    responseHandler = new ResponseHandler();
+    frontEnd = new FrontEnd(UI_PORT, requestDispatcher, requestDispatcher);
     
-    System.out.println("Launching front end...");
-    //frontEnd = new FrontEnd(UI_PORT, masterController); // configure the front end
+    logHandler.onInfo("FRONTEND", "Enabling network connectivity...");
+    boneMesh = BoneMesh.build("kwic-frontend", BONEMESH_PORT);
+    
+    logHandler.onInfo("FRONTEND", "Linking modules...");
+    boneMesh.addLogListener(logHandler);
+    responseHandler.setSetLinesHook(requestDispatcher);
+    requestDispatcher.linkBoneMesh(boneMesh);
+    boneMesh.addDataListener(responseHandler);
+    
+    logHandler.onInfo("FRONTEND", "Loading UI...");
     (new Thread(frontEnd)).start(); // run the front end in a different thread
     
-    System.out.println("Ready!");
+    logHandler.onInfo("FRONTEND", "Ready!");
     
     // catch CTRL + C
     Runtime.getRuntime().addShutdownHook(new Thread() {
       @Override public void run() {
         try {
-          System.out.println("Closing front end...");
+          logHandler.onInfo("FRONTEND", "Spinning down...");
           frontEnd.halt();
-          
+          boneMesh.kill();
           Thread.sleep(1000);
-          
-          System.out.println("Goodbye!");
-          Thread.sleep(200);
         } catch(InterruptedException e) {
           Thread.currentThread().interrupt();
+        } finally {
+          logHandler.onInfo("FRONTEND", "Goodbye!");
         }
       }
     });
+  }
+  
+  /**
+   * Retrieves the logger.
+   * 
+   * @return the logger 
+   */
+  public static LogHandler getLogger() {
+    return logHandler;
   }
 
 }

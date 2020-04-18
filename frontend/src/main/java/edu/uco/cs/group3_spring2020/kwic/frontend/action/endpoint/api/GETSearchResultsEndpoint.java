@@ -17,19 +17,36 @@ import spark.ModelAndView;
 import spark.Request;
 import spark.Response;
 
+/**
+ * The API endpoint that allows the user to query the content.
+ * 
+ * @author Caleb L. Power
+ */
 public class GETSearchResultsEndpoint extends Endpoint {
   
   private SearchContentHook hook = null;
   
+  /**
+   * Instantiates the GET Search Results endpoint.
+   */
   public GETSearchResultsEndpoint() {
     super("/api/content", HTTPMethod.GET);
   }
   
+  /**
+   * Links the Search Content hook to this endpoint.
+   * 
+   * @param hook the hook
+   * @return this Endpoint object
+   */
   public GETSearchResultsEndpoint linkSearchContentHook(SearchContentHook hook) {
     this.hook = hook;
     return this;
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override public ModelAndView customAction(Request request, Response response) {
     System.out.println(String.format("User at %1$s hit the GET content endpoint.", request.ip()));
     JSONObject responseBody = new JSONObject();
@@ -47,14 +64,14 @@ public class GETSearchResultsEndpoint extends Endpoint {
       
       if(keywords.size() == 0) throw new BadKeywordException();
       
-      UUID trackingUUID = hook.dispatch(keywords);
+      UUID trackingUUID = hook.dispatchQuery(keywords);
       if(trackingUUID == null) {
         responseBody
             .put("status", "error")
             .put("info", "Service unavailable.");
         response.status(503);
       } else {
-        Set<Entry> results = hook.getResults(trackingUUID, 60);
+        Set<Entry> results = hook.getQueryResults(trackingUUID, 60);
         if(results == null) {
           responseBody
               .put("status", "error")

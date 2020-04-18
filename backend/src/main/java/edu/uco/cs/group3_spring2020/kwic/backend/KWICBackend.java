@@ -14,7 +14,7 @@ import edu.uco.cs.group3_spring2020.kwic.backend.domain.controllers.LineManager;
  */
 public class KWICBackend {
   
-  private static int EXTERNAL_PORT = 8457;
+  private static final int EXTERNAL_PORT = 8457;
   
   private static BoneMesh boneMesh = null; // BoneMesh v2
   private static DataHandler dataHandler = null; // the incoming data handler

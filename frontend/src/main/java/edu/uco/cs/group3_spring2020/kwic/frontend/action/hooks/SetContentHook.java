@@ -20,6 +20,6 @@ public interface SetContentHook {
    * @return boolean <code>true</code> if dispatch was successful
    * @throws JSONException if the user input is bad
    */
-  public boolean dispatch(Set<Entry> entries) throws JSONException;
+  public boolean dispatchNewContent(Set<Entry> entries) throws JSONException;
   
 }
