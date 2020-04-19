@@ -124,7 +124,7 @@ public class LineManager implements InitiateSearchHook, SetLinesHook {
     KWICBackend.getLogger().onInfo("LINE_MANAGER", "SEARCH operation completed in " + (stopTime - startTime) + " milliseconds.");
     
     if(searchResponseHook != null)
-      searchResponseHook.deploySearchResponse(results);
+      searchResponseHook.deploySearchResponse(request.getID(), results);
   }
 
 }
