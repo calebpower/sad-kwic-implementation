@@ -1,7 +1,7 @@
 $(document).ready(function () {
   start();
 
-  const baseUrl = "http://localhost:4567/api/content";
+  const baseUrl = "http://localhost:9569/api/content";
 
   function start() {
     addListeners();

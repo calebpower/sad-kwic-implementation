@@ -15,7 +15,7 @@ import edu.uco.cs.group3_spring2020.kwic.frontend.action.net.ResponseHandler;
 public class KWICFrontend {
   
   private static final int BONEMESH_PORT = 9568;
-  private static final int UI_PORT = 4567;
+  private static final int UI_PORT = 9569;
   
   private static BoneMesh boneMesh = null; // BoneMesh v2
   private static FrontEnd frontEnd = null; // the front end
