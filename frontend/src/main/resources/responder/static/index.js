@@ -3,6 +3,10 @@ $(document).ready(function () {
 
   const baseUrl = "http://localhost:9569/api/content";
 
+  const settings = {
+    scrapeEnabled: true,
+  };
+
   function start() {
     addListeners();
   }
@@ -10,7 +14,7 @@ $(document).ready(function () {
   function addListeners() {
     $("#search-form").on("submit", function (e) {
       e.preventDefault();
-      const content = $("#search-query");
+      const content = $("#search-query").val();
       queryDb(content);
     });
     $("#saveBtn").on("click", function () {
@@ -18,6 +22,7 @@ $(document).ready(function () {
       if (input.length > 0) saveInputToDb(input);
       else showAlert("warning", "A valid text input is required");
     });
+    $("#icon-scrapeBtn").on("click", toggleScrape);
   }
 
   async function saveInputToDb(input) {
@@ -47,9 +52,8 @@ $(document).ready(function () {
         body: JSON.stringify({ entries }),
       });
       const json = await response.json();
-      console.log(json);
 
-      $("#db-info").html(
+      $("#db-infoBtn").html(
         "<span class='text-success' >📑 Database initialized - click to change input.</span>"
       );
     } catch (e) {
@@ -62,47 +66,42 @@ $(document).ready(function () {
     }
   }
 
-  function getContent() {
-    // get all lines and push them to content
-    const content = [];
-    $(".line").each(function () {
-      const text = $(this).text().trim();
-      if (text) content.push(text);
-    });
-
-    return content;
-  }
-
   async function queryDb(content) {
     if (content.length <= 0) {
       return showAlert("warning", "A valid text input is required");
     }
 
-    console.log(content);
+    const query = content.trim().split(" ");
 
     try {
       $("#loader").toggleClass("hidden");
-      const response = await fetch(baseUrl, {
-        method: "post",
-        body: JSON.stringify({ q: content }),
-      });
+      const response = await fetch(baseUrl + `?q=${query.join("&q=")}`);
       const json = await response.json();
+
+      console.log(json);
       let entries = "";
 
       for (const entry of json.entries) {
         entries += ` <small class="d-block bg-light py-1"><a href="${tagStripper(
           entry.url
         )}" target="_blank" class="text-dark p-1 px-2">
-        <img src="${await getFavicon(entry.url)}" width="40"/> ${tagStripper(
+        <img src="${await getFavicon(
+          entry.url
+        )}" alt="🌐"  onerror="this.style.display='none'" width="40"/> ${tagStripper(
           entry.description
         )}</a></small>`;
       }
-      setPreviewContent(entries);
+
+      showResults(entries);
     } catch (e) {
       showAlert("danger", e);
     } finally {
       $("#loader").toggleClass("hidden");
     }
+  }
+
+  function showResults(results) {
+    $("#search-content").html(results);
   }
 
   function showAlert(type, msg) {
@@ -116,13 +115,28 @@ $(document).ready(function () {
             `);
   }
 
+  function toggleScrape() {
+    settings.scrapeEnabled = !settings.scrapeEnabled;
+
+    if (settings.scrapeEnabled) {
+      $("#icon-scrapeBtn").html(
+        `<span class="text-success">⚙️ Icon scraping enabled (slow) - click to disable.</span>`
+      );
+    } else {
+      $("#icon-scrapeBtn").html(
+        `<span class="text-danger">⚙️ Icon scraping disabled (fast) - click to enable.</span>`
+      );
+    }
+  }
+
   // utilities
   function tagStripper(html) {
     return html.replace(/<\/?[^>]+(>|$)/g, "");
   }
 
-  getFavicon("http://www.uco.edu");
   async function getFavicon(url) {
+    if (!settings.scrapeEnabled) return "";
+
     try {
       const domain = url.match(
         /([http|https]+:)\/\/(w{3}\.)?([\w|\d|\.]+)/i
@@ -130,12 +144,11 @@ $(document).ready(function () {
       const response = await fetch(
         "http://favicongrabber.com/api/grab/" + domain
       );
-      const json = await response.json()
+      const json = await response.json();
 
-      return json.icons[0].src
-
+      return json.icons[0].src;
     } catch (e) {
-      return "🌐";
+      return "";
     }
   }
 });
