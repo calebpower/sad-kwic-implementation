@@ -54,7 +54,7 @@ public abstract class Endpoint {
    */
   public ModelAndView action(Request request, Response response) {
     KWICFrontend.getLogger().onDebug("ENDPOINT",
-        String.format("User at %1$s got response code %2$d for enpdoint %3$s",
+        String.format("User at %1$s got response code %2$s for enpdoint %3$d",
             request.ip(), request.pathInfo(), response.status()));
     return customAction(request, response);
   }

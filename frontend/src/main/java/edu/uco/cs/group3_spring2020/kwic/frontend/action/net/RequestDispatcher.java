@@ -50,7 +50,7 @@ public class RequestDispatcher implements SearchContentHook, SetContentHook {
    */
   @Override public UUID dispatchQuery(Set<String> keywords) {
     UUID uuid = UUID.randomUUID();
-    SearchRequest request = new SearchRequest(uuid, keywords);
+    SearchRequest request = new SearchRequest("kwic-frontend", "kwic-backend", uuid, keywords);
     if(!pending.contains(uuid)) pending.add(uuid);
     if(boneMesh != null && boneMesh.broadcastDatum(request)) return uuid;
     if(pending.contains(uuid)) pending.remove(uuid);
@@ -88,7 +88,7 @@ public class RequestDispatcher implements SearchContentHook, SetContentHook {
    * {@inheritDoc}
    */
   @Override public boolean dispatchNewContent(Set<Entry> entries) throws JSONException {
-    SetEntriesRequest request = new SetEntriesRequest(entries);
+    SetEntriesRequest request = new SetEntriesRequest("kwic-frontend", "kwic-backend", entries);
     return boneMesh != null && boneMesh.broadcastDatum(request);
   }
 

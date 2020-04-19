@@ -75,6 +75,7 @@ public class POSTContentEndpoint extends Endpoint {
           .put("status", "error")
           .put("info", "Syntax error: " + e.getMessage());
       response.status(400);
+      e.printStackTrace();
     } catch(Exception e) {
       responseBody // if we get here, then the backend developer is dumb
           .put("status", "error")

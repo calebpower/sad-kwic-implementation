@@ -22,11 +22,13 @@ public class SearchResponse extends GenericMessage {
   /**
    * Constructs an error response.
    * 
+   * @param from the originating server
+   * @param to the recipient
    * @param uuid the tracking ID
    * @param error the error message
    */
-  public SearchResponse(UUID uuid, String error) {
-    super(new JSONObject()
+  public SearchResponse(String from, String to, UUID uuid, String error) {
+    super(from, to, new JSONObject()
         .put("type", MessageType.SEARCH_RESPONSE.name())
         .put("status", "error")
         .put("id", uuid.toString())
@@ -37,10 +39,12 @@ public class SearchResponse extends GenericMessage {
    * Constructs a successful search response.
    * Note that search results can be empty.
    * 
+   * @param from the originating server
+   * @param to the recipient
    * @param uuid the tracking ID
    * @param results the error message
    */
-  public SearchResponse(UUID uuid, Set<Entry> results) {
+  public SearchResponse(String from, String to, UUID uuid, Set<Entry> results) {
     super(new JSONObject()
         .put("type", MessageType.SEARCH_RESPONSE.name())
         .put("status", "ok")

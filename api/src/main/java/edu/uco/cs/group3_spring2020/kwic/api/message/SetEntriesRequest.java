@@ -20,10 +20,12 @@ public class SetEntriesRequest extends GenericMessage {
   /**
    * Constructs the request from a list of entries.
    * 
+   * @param from the originating server
+   * @param to the recipient
    * @param entries the entries
    */
-  public SetEntriesRequest(Set<Entry> entries) {
-    super(new JSONObject()
+  public SetEntriesRequest(String from, String to, Set<Entry> entries) {
+    super(from, to, new JSONObject()
         .put("type", MessageType.SET_LINES_REQUEST.name())
         .put("entries", new JSONArray()));
     for(Entry entry : entries)

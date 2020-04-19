@@ -31,7 +31,7 @@ public class MessageDispatcher implements SearchResponseHook {
    * {@inheritDoc}
    */
   @Override public boolean deploySearchResponse(Set<Entry> entries) {
-    SearchResponse response = new SearchResponse(UUID.randomUUID(), entries);
+    SearchResponse response = new SearchResponse("kwic-backend", "kwic-frontend", UUID.randomUUID(), entries);
     if(boneMesh != null) return boneMesh.broadcastDatum(response, true);
     return false;
   }

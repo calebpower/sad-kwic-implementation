@@ -83,5 +83,14 @@ public class KWICFrontend {
   public static LogHandler getLogger() {
     return logHandler;
   }
+  
+  /**
+   * Retrieves the label of this BoneMesh node.
+   * 
+   * @return the label or <code>null</code> if BoneMesh isn't instantiated
+   */
+  public static String getLabel() {
+    return boneMesh == null ? null : boneMesh.getInstanceLabel();
+  }
 
 }

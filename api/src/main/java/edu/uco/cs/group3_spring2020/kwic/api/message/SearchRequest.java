@@ -20,11 +20,13 @@ public class SearchRequest extends GenericMessage {
   /**
    * Constructs a search request from a tracking ID and the search keys.
    * 
+   * @param from the originating server
+   * @param to the recipient
    * @param uuid the tracking ID
    * @param keys the keywords
    */
-  public SearchRequest(UUID uuid, Set<String> keys) {
-    super(new JSONObject()
+  public SearchRequest(String from, String to, UUID uuid, Set<String> keys) {
+    super(from, to, new JSONObject()
         .put("type", MessageType.SEARCH_REQUEST.name())
         .put("id", uuid)
         .put("keys", new JSONArray()));
