@@ -6,6 +6,7 @@ import edu.uco.cs.group3_spring2020.kwic.api.LogHandler;
 import edu.uco.cs.group3_spring2020.kwic.backend.action.DataHandler;
 import edu.uco.cs.group3_spring2020.kwic.backend.action.MessageDispatcher;
 import edu.uco.cs.group3_spring2020.kwic.backend.domain.controllers.LineManager;
+import edu.uco.cs.group3_spring2020.kwic.backend.domain.persistent.FlatfileDB;
 
 /**
  * Engine to index user-provided lines using KWIC* method.
@@ -18,6 +19,7 @@ public class KWICBackend {
   
   private static BoneMesh boneMesh = null; // BoneMesh v2
   private static DataHandler dataHandler = null; // the incoming data handler
+  private static FlatfileDB database = null; // the flat file database
   private static LineManager lineManager = null; // the KWIC* master controller
   private static LogHandler logHandler = null; // the logger
   private static MessageDispatcher messageDispatcher = null; // the message dispatcher
@@ -28,44 +30,52 @@ public class KWICBackend {
    * @param args command-line arguments
    */
   public static void main(String[] args) {
-    
     logHandler = new LogHandler();
-    logHandler.onInfo("BACKEND", "Instantiating modules...");
-    lineManager = new LineManager();
-    dataHandler = new DataHandler();
-    messageDispatcher = new MessageDispatcher();
-    
-    logHandler.onInfo("BACKEND", "Enabling network connectivity...");
-    boneMesh = BoneMesh.build("kwic-backend", EXTERNAL_PORT);
-    
-    logHandler.onInfo("BACKEND", "Linking modules...");
-    boneMesh.addLogListener(logHandler);
-    messageDispatcher.linkBoneMesh(boneMesh);
-    lineManager.setSearchResponseHook(messageDispatcher);
-    dataHandler.setInitiateSearchHook(lineManager).setSetLinesHook(lineManager);
-    boneMesh.addDataListener(dataHandler);
-    
-    logHandler.onInfo("BACKEND", "Ready!");
-
-    // catch CTRL + C
-    Runtime.getRuntime().addShutdownHook(new Thread() {
-      @Override public void run() {
-        try {
-          logHandler.onInfo("BACKEND", "Spinning down...");
-          boneMesh.kill();
-          Thread.sleep(1000);
-        } catch(InterruptedException e) {
-          Thread.currentThread().interrupt();
-        } finally {
-          logHandler.onInfo("BACKEND", "Goodbye!");
-        }
-      }
-    });
-    
     try {
-      while(!Thread.interrupted())
-        Thread.sleep(1000L);
-    } catch(InterruptedException e) { }
+      logHandler.onInfo("BACKEND", "Instantiating modules...");
+      database = new FlatfileDB();
+      lineManager = new LineManager();
+      dataHandler = new DataHandler();
+      messageDispatcher = new MessageDispatcher();
+      
+      logHandler.onInfo("BACKEND", "Enabling network connectivity...");
+      boneMesh = BoneMesh.build("kwic-backend", EXTERNAL_PORT);
+      
+      logHandler.onInfo("BACKEND", "Linking modules...");
+      boneMesh.addLogListener(logHandler);
+      messageDispatcher.linkBoneMesh(boneMesh);
+      lineManager.setSearchResponseHook(messageDispatcher).setDB(database);
+      dataHandler.setInitiateSearchHook(lineManager).setSetLinesHook(lineManager);
+      boneMesh.addDataListener(dataHandler);
+      
+      logHandler.onInfo("BACKEND", "Loading existing entries from disk...");
+      lineManager.load();
+      
+      logHandler.onInfo("BACKEND", "Ready!");
+  
+      // catch CTRL + C
+      Runtime.getRuntime().addShutdownHook(new Thread() {
+        @Override public void run() {
+          try {
+            logHandler.onInfo("BACKEND", "Spinning down...");
+            boneMesh.kill();
+            Thread.sleep(1000);
+          } catch(InterruptedException e) {
+            Thread.currentThread().interrupt();
+          } finally {
+            logHandler.onInfo("BACKEND", "Goodbye!");
+          }
+        }
+      });
+      
+      try {
+        while(!Thread.interrupted())
+          Thread.sleep(1000L);
+      } catch(InterruptedException e) { }
+      
+    } catch(Exception e) {
+      logHandler.onError("BACKEND", "Some exception was thrown: " + e.getMessage());
+    }
     
   }
   

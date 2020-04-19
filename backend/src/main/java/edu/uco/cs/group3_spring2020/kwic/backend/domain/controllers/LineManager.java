@@ -20,6 +20,7 @@ import edu.uco.cs.group3_spring2020.kwic.backend.domain.modules.Alphabetizer;
 import edu.uco.cs.group3_spring2020.kwic.backend.domain.modules.CircularShifter;
 import edu.uco.cs.group3_spring2020.kwic.backend.domain.modules.Module;
 import edu.uco.cs.group3_spring2020.kwic.backend.domain.modules.NoiseRemover;
+import edu.uco.cs.group3_spring2020.kwic.backend.domain.persistent.FlatfileDB;
 import edu.uco.cs.group3_spring2020.kwic.backend.domain.token.Line;
 import edu.uco.cs.group3_spring2020.kwic.backend.domain.token.Word;
 
@@ -30,6 +31,7 @@ import edu.uco.cs.group3_spring2020.kwic.backend.domain.token.Word;
  */
 public class LineManager implements InitiateSearchHook, SetLinesHook {
   
+  private FlatfileDB db = null;
   private Map<Line, Entry> entries = null;
   private Map<Word, Set<Entry>> keywords = null;
   private SearchResponseHook searchResponseHook = null;
@@ -54,15 +56,36 @@ public class LineManager implements InitiateSearchHook, SetLinesHook {
   }
   
   /**
+   * Sets the flat file database.
+   * 
+   * @param db the database
+   * @return this LineManager object
+   */
+  public LineManager setDB(FlatfileDB db) {
+    this.db = db;
+    return this;
+  }
+  
+  /**
+   * Loads from the database if it's been instantiated.
+   */
+  public void load() {
+    setEntries(db.load());
+  }
+  
+  /**
    * {@inheritDoc}
    */
   @Override public void setEntries(SetEntriesRequest request) throws JSONException {
+    setEntries(request.getEntries());
+  }
+  
+  private void setEntries(Set<Entry> entries) {
     final long startTime = System.currentTimeMillis();
     
-    Set<Entry> entries = request.getEntries();
-    
-    synchronized(entries) {    
+    synchronized(this.entries) {    
       this.entries.clear();
+      if(entries.size() == 0) return;
       for(Entry e : entries) {
         KWICBackend.getLogger().onDebug("LINE_MANAGER", "Received entry: " + e.serialize());
         this.entries.put(new Line(e.getDescription()), e);
@@ -92,6 +115,7 @@ public class LineManager implements InitiateSearchHook, SetLinesHook {
     
     final long stopTime = System.currentTimeMillis();
     KWICBackend.getLogger().onInfo("LINE_MANAGER", "SET operation completed in " + (stopTime - startTime) + " milliseconds.");
+    db.save(entries);
   }
   
   /**
