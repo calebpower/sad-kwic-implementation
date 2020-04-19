@@ -87,7 +87,7 @@ public class Alphabetizer extends Module {
         int n2 = middle + 1;
         int k = leftBound;
         
-        Object[][] temp = new Line[rightBound - leftBound + 1][2];
+        Object[][] temp = new Object[rightBound - leftBound + 1][2];
         for(int i = 0; i <= rightBound - leftBound; i++)
           temp[i] = output[i + leftBound];
         

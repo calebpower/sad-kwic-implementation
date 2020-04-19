@@ -41,7 +41,7 @@ public class CircularShifter extends Module {
       shifters.add(shifter);
     }
     
-    lines = new Line[lineCount][2];
+    lines = new Object[lineCount][2];
     
     for(Shifter shifter : shifters) shifter.thread.start();
     

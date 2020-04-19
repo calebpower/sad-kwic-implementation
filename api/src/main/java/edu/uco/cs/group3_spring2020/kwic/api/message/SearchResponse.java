@@ -45,7 +45,7 @@ public class SearchResponse extends GenericMessage {
    * @param results the error message
    */
   public SearchResponse(String from, String to, UUID uuid, Set<Entry> results) {
-    super(new JSONObject()
+    super(from, to, new JSONObject()
         .put("type", MessageType.SEARCH_RESPONSE.name())
         .put("status", "ok")
         .put("id", uuid.toString())
@@ -91,7 +91,7 @@ public class SearchResponse extends GenericMessage {
   public Set<Entry> getResults() {
     if(!getPayload().has("results")) return null;
     Set<Entry> results = new HashSet<>();
-    for(Object o : getPayload().getJSONArray("entries"))
+    for(Object o : getPayload().getJSONArray("results"))
       results.add(new Entry((JSONObject)o));
     return results;
   }

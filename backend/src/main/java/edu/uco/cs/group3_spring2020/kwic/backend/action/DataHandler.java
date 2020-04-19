@@ -49,17 +49,19 @@ public class DataHandler implements DataListener {
    */
   @Override public void digest(JSONObject message) {
     try {
-      if(message.has("payload") && message.getJSONObject("payload").has("type")) {
-        MessageType type = MessageType.valueOf(message.getJSONObject("payload").getString("type"));
+      if(message.has("payload")
+          && message.getJSONObject("payload").has("payload")
+          && message.getJSONObject("payload").getJSONObject("payload").has("type")) {
+        MessageType type = MessageType.valueOf(message.getJSONObject("payload").getJSONObject("payload").getString("type"));
         if(type != null) {
           switch(type) {
           case SET_LINES_REQUEST:
             if(setLinesHook == null) KWICBackend.getLogger().onError("DATA_HANDLER", "Hook to set lines not found.");
-            else setLinesHook.setEntries(new SetEntriesRequest(message));
+            else setLinesHook.setEntries(new SetEntriesRequest(message.getJSONObject("payload")));
             break;
           case SEARCH_REQUEST:
             if(initiateSearchHook == null) KWICBackend.getLogger().onError("DATA_HANDLER", "Hook to initiate search not found.");
-            else initiateSearchHook.search(new SearchRequest(message));
+            else initiateSearchHook.search(new SearchRequest(message.getJSONObject("payload")));
             break;
           default:
             KWICBackend.getLogger().onError("DATA_HANDLER", String.format("This platform was not designed to handle messages of type '%1$s'.", type.toString()));

@@ -39,6 +39,7 @@ public class LineManager implements InitiateSearchHook, SetLinesHook {
    */
   public LineManager() {
     this.entries = new LinkedHashMap<>();
+    this.keywords = new HashMap<>();
   }
   
   /**
@@ -62,8 +63,10 @@ public class LineManager implements InitiateSearchHook, SetLinesHook {
     
     synchronized(entries) {    
       this.entries.clear();
-      for(Entry e : entries)
+      for(Entry e : entries) {
+        KWICBackend.getLogger().onDebug("LINE_MANAGER", "Received entry: " + e.serialize());
         this.entries.put(new Line(e.getDescription()), e);
+      }
       
       final Module[] modules = new Module[] { // collect the modules
           new CircularShifter(this.entries), // circular shift module
@@ -77,6 +80,10 @@ public class LineManager implements InitiateSearchHook, SetLinesHook {
       keywords.clear();
       for(Line line : this.entries.keySet()) {
         Entry entry = this.entries.get(line);
+        KWICBackend.getLogger().onDebug("LINE_MANAGER",
+            String.format("Saving entry url = %1$s, modified description = %2$s",
+            entry.getURL(),
+            line.toString()));
         Word word = line.getWords()[0];
         if(!keywords.containsKey(word)) keywords.put(word, new HashSet<>());
         if(!keywords.get(word).contains(entry)) keywords.get(word).add(entry);
@@ -125,6 +132,7 @@ public class LineManager implements InitiateSearchHook, SetLinesHook {
     
     if(searchResponseHook != null)
       searchResponseHook.deploySearchResponse(request.getID(), results);
+    else KWICBackend.getLogger().onError("LINE_MANAGER", "Hook not instantiated!");
   }
 
 }

@@ -66,7 +66,7 @@ public class Character {
   }
   
   @Override public int hashCode() {
-    return new Character(character).hashCode();
+    return (int)character;
   }
   
   @Override public boolean equals(Object o) {

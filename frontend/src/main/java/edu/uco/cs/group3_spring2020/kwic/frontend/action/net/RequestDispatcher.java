@@ -14,6 +14,7 @@ import edu.uco.cs.group3_spring2020.kwic.api.Entry;
 import edu.uco.cs.group3_spring2020.kwic.api.message.SearchRequest;
 import edu.uco.cs.group3_spring2020.kwic.api.message.SearchResponse;
 import edu.uco.cs.group3_spring2020.kwic.api.message.SetEntriesRequest;
+import edu.uco.cs.group3_spring2020.kwic.frontend.KWICFrontend;
 import edu.uco.cs.group3_spring2020.kwic.frontend.action.hooks.SearchContentHook;
 import edu.uco.cs.group3_spring2020.kwic.frontend.action.hooks.SetContentHook;
 
@@ -52,7 +53,8 @@ public class RequestDispatcher implements SearchContentHook, SetContentHook {
     UUID uuid = UUID.randomUUID();
     SearchRequest request = new SearchRequest("kwic-frontend", "kwic-backend", uuid, keywords);
     if(!pending.contains(uuid)) pending.add(uuid);
-    if(boneMesh != null && boneMesh.broadcastDatum(request)) return uuid;
+    KWICFrontend.getLogger().onInfo("REQUEST_DISPATCHER", "Dispatching query for " + uuid.toString());
+    if(boneMesh != null && boneMesh.sendDatum("kwic-backend", request)) return uuid;
     if(pending.contains(uuid)) pending.remove(uuid);
     return null;
   }
@@ -65,6 +67,7 @@ public class RequestDispatcher implements SearchContentHook, SetContentHook {
       int c = 0;
       do {
         if(results.containsKey(uuid)) return results.get(uuid);
+        KWICFrontend.getLogger().onDebug("REQUEST_DISPATCHER", "Waiting for response to " + uuid.toString());
         Thread.sleep(1000L);
       } while(++c < timeout);
     } catch(InterruptedException e) { }
@@ -80,6 +83,7 @@ public class RequestDispatcher implements SearchContentHook, SetContentHook {
     if(results.containsKey(uuid)) results.remove(uuid);
     if(!pending.contains(uuid)) return false;
     pending.remove(uuid);
+    KWICFrontend.getLogger().onInfo("REQUEST_DISPATCHER", "Got response to " + uuid.toString());
     results.put(uuid, response.getResults());
     return true;
   }
@@ -89,7 +93,7 @@ public class RequestDispatcher implements SearchContentHook, SetContentHook {
    */
   @Override public boolean dispatchNewContent(Set<Entry> entries) throws JSONException {
     SetEntriesRequest request = new SetEntriesRequest("kwic-frontend", "kwic-backend", entries);
-    return boneMesh != null && boneMesh.broadcastDatum(request);
+    return boneMesh != null && boneMesh.sendDatum("kwic-backend", request);
   }
 
 }
