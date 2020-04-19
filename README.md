@@ -8,10 +8,16 @@ This project is for our UCO Spring 2020 Software Architecture and Design class, 
 
 This project can be tested and compiled with the following command:
 
-`gradle clean test shadowJar`
+On Windows: `build.bat`
+
+or
+
+On *NIX: `build.sh`
 
 ## Executing
 
-This project can be executed with the following command:
+Two applications need to be launched, in any order.
 
-`java -jar build\libs\KWICProject-1.0.0.jar`
+`java -jar backend\build\libs\KWICBackend-3.0.0.jar`
+
+`java -jar frontend\build\libs\KWICFrontend-3.0.0.jar`
