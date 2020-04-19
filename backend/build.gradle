@@ -1,0 +1,47 @@
+plugins {
+  id "com.github.johnrengelman.shadow" version "5.1.0"
+}
+
+apply plugin: 'java-library'
+apply plugin: 'eclipse'
+
+repositories {
+  jcenter()
+  maven {
+    url "https://jitpack.io/"
+  }
+}
+
+group = theGroup
+version = theVersion
+sourceCompatibility = theCompatibility
+targetCompatibility = theCompatibility
+
+dependencies {
+  implementation files('../api/build/libs/kwic-api-3.0.0.jar')
+  implementation 'com.bitbucket.axonibyte:BoneMesh:2.0.1'
+  implementation 'org.json:json:20190722'
+  testImplementation 'org.easymock:easymock:4.0.2'
+  testImplementation 'junit:junit:4.12'
+}
+
+eclipse {
+  classpath {
+    downloadJavadoc = true
+    downloadSources = true
+  }
+}
+
+jar {
+  manifest {
+    attributes 'Main-Class': theGroup + '.' + theName
+  }
+}
+
+shadowJar {
+  shadowJar {
+    baseName = theName
+    classifier = null
+    version = theVersion
+  }
+}

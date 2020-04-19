@@ -1,0 +1,40 @@
+plugins {
+  id "com.github.johnrengelman.shadow" version "5.1.0"
+}
+
+apply plugin: 'java-library'
+apply plugin: 'eclipse'
+
+repositories {
+  jcenter()
+  maven {
+    url "https://jitpack.io/"
+  }
+}
+
+group = theGroup
+version = theVersion
+sourceCompatibility = theCompatibility
+targetCompatibility = theCompatibility
+
+dependencies {
+  compileOnly 'com.bitbucket.axonibyte:BoneMesh:2.0.1'
+  compileOnly 'org.json:json:20190722'
+  testImplementation 'org.easymock:easymock:4.0.2'
+  testImplementation 'junit:junit:4.12'
+}
+
+eclipse {
+  classpath {
+    downloadJavadoc = true
+    downloadSources = true
+  }
+}
+
+shadowJar {
+  shadowJar {
+    baseName = theName
+    classifier = null
+    version = theVersion
+  }
+}
