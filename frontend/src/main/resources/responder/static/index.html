@@ -49,7 +49,8 @@
 								<div class="cube2"></div>
 							</div>
 						</div>
-						<div class="col-xl-6 mx-auto ">
+						<div class="col-xl-6 mx-auto">
+							<button class="btn btn-sm btn-outline-info mb-3" data-toggle="modal" data-target="#modal2">View Raw</button>
 							<form id="search-form">
 								<div class="input-group w-100">
 									<input type="text" class="form-control bg-light" id="search-query" style="height: 50px;"
@@ -96,6 +97,24 @@
 			</div>
 		</div>
 	</div>
+
+<div class="modal fade bd-example-modal-xl" tabindex="-1" role="dialog" id="modal2">
+  <div class="modal-dialog modal-xl" role="document">
+    <div class="modal-content">
+		<div class="modal-header">
+			<h5 class="modal-title">Preview Raw</h5>
+			<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+				<span aria-hidden="true">&times;</span>
+			</button>
+		</div>
+		<div class="modal-body">
+			<div>
+			<table cellpadding="10" id="raw-content"><td class="text-muted text-center">Raw search results will be displayed here...</td><table>
+			</div>
+		</div>
+    </div>
+  </div>
+</div>
 
 	<!-- Optional JavaScript -->
 	<!-- jQuery first, then Popper.js, then Bootstrap JS -->

@@ -9,6 +9,8 @@ $(document).ready(function () {
 
   function start() {
     addListeners();
+    // reset database on start
+    
   }
 
   function addListeners() {
@@ -80,8 +82,15 @@ $(document).ready(function () {
 
       console.log(json);
       let entries = "";
+      let rawEntries = ""
 
       for (const entry of json.entries) {
+
+        rawEntries += `<tr>
+        <td>${tagStripper(entry.description)}</td>
+        <td>${tagStripper(entry.url)}</td>
+        </tr>`
+
         entries += ` <small class="d-block bg-light py-1"><a href="${tagStripper(
           entry.url
         )}" target="_blank" class="text-dark p-1 px-2">
@@ -91,8 +100,8 @@ $(document).ready(function () {
           entry.description
         )}</a></small>`;
       }
-
-      showResults(entries);
+      
+      showResults(entries,rawEntries);
     } catch (e) {
       showAlert("danger", e);
     } finally {
@@ -100,8 +109,9 @@ $(document).ready(function () {
     }
   }
 
-  function showResults(results) {
+  function showResults(results,rawResults) {
     $("#search-content").html(results);
+    $("#raw-content").html(rawResults)
   }
 
   function showAlert(type, msg) {
