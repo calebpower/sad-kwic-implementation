@@ -31,6 +31,9 @@ public class KWICFrontend {
   public static void main(String[] args) {
     logHandler = new LogHandler();
     try {
+      if(args.length != 1)
+        throw new Exception("Bad args. Include arg <backend_ip>");
+      
       logHandler.onInfo("FRONTEND", "Instantiating modules...");
       requestDispatcher = new RequestDispatcher();
       responseHandler = new ResponseHandler();
@@ -38,7 +41,7 @@ public class KWICFrontend {
       
       logHandler.onInfo("FRONTEND", "Enabling network connectivity...");
       boneMesh = BoneMesh.build("kwic-frontend", BONEMESH_PORT);
-      boneMesh.addNode("kwic-backend", "127.0.0.1:8457");
+      boneMesh.addNode("kwic-backend", args[0] + ":8457");
       
       logHandler.onInfo("FRONTEND", "Linking modules...");
       boneMesh.addLogListener(logHandler);
