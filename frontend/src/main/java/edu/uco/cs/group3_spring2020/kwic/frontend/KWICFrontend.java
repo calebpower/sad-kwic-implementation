@@ -15,7 +15,7 @@ import edu.uco.cs.group3_spring2020.kwic.frontend.action.net.ResponseHandler;
 public class KWICFrontend {
   
   private static final int BONEMESH_PORT = 9568;
-  private static final int UI_PORT = 9569;
+  // private static final int UI_PORT = 9569;
   
   private static BoneMesh boneMesh = null; // BoneMesh v2
   private static FrontEnd frontEnd = null; // the front end
@@ -31,17 +31,17 @@ public class KWICFrontend {
   public static void main(String[] args) {
     logHandler = new LogHandler();
     try {
-      if(args.length != 1)
-        throw new Exception("Bad args. Include arg <backend_ip>");
+      if(args.length != 2)
+        throw new Exception("Bad args. Include arg <ui_port> <backend_ip>");
       
       logHandler.onInfo("FRONTEND", "Instantiating modules...");
       requestDispatcher = new RequestDispatcher();
       responseHandler = new ResponseHandler();
-      frontEnd = new FrontEnd(UI_PORT, requestDispatcher, requestDispatcher);
+      frontEnd = new FrontEnd(Integer.parseInt(args[0]), requestDispatcher, requestDispatcher);
       
       logHandler.onInfo("FRONTEND", "Enabling network connectivity...");
       boneMesh = BoneMesh.build("kwic-frontend", BONEMESH_PORT);
-      boneMesh.addNode("kwic-backend", args[0] + ":8457");
+      boneMesh.addNode("kwic-backend", args[1] + ":8457");
       
       logHandler.onInfo("FRONTEND", "Linking modules...");
       boneMesh.addLogListener(logHandler);
