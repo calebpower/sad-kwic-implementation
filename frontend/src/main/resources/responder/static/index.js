@@ -1,7 +1,7 @@
 $(document).ready(function () {
   start();
 
-  const baseUrl = "http://localhost:9569/api/content";
+  const baseUrl = "https://microminer.calebpower.com/api/content";
 
   const settings = {
     scrapeEnabled: true,
