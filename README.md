@@ -14,4 +14,4 @@ This project can be tested and compiled with the following command:
 
 This project can be executed with the following command:
 
-`java -jar build\libs\KWICProject-1.0.0.jar`
+`java -jar build\libs\KWICProject-1.1.0.jar`
