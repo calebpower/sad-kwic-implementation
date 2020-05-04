@@ -1,4 +1,4 @@
-package edu.uco.cs.group3_spring2020.kwic.domain.modules;
+package edu.uco.cs.group3_spring2020.kwic.domain.state;
 
 import static org.junit.Assert.assertTrue;
 
@@ -6,20 +6,30 @@ import java.util.LinkedHashMap;
 
 import org.junit.Test;
 
+import edu.uco.cs.group3_spring2020.kwic.domain.state.CircularShiftState;
+import edu.uco.cs.group3_spring2020.kwic.domain.state.Input;
+import edu.uco.cs.group3_spring2020.kwic.domain.state.State;
 import edu.uco.cs.group3_spring2020.kwic.domain.token.Line;
 
 /**
- * Tests for the alphabetizing module.
+ * Tests for the circular shift module.
  * 
  * @author Caleb L. Power
  */
-public class AlphabetizerTest {
+public class CircularShiftStateTest {
   
   /**
-   * Tests the alphabetizing mechanism.
+   * Tests the circular shift mechanism.
    */
-  @Test public void testTransform() {
+  @Test public void testTransform() {    
     final Line[] testInput = new Line[] {
+        new Line("this is the first test"),
+        new Line("here's another test"),
+        new Line("blah blah third test"),
+        new Line("abcde 12345 67wx yz89")
+    };
+    
+    final Line[] expectedOutput = new Line[] {
         new Line("this is the first test"),
         new Line("is the first test this"),
         new Line("the first test this is"),
@@ -31,31 +41,20 @@ public class AlphabetizerTest {
         new Line("blah blah third test"),
         new Line("blah third test blah"),
         new Line("third test blah blah"),
-        new Line("test blah blah third")
-     };
-    
-    final Line[] expectedOutput = new Line[] {
-        new Line("another test here's"),
-        new Line("blah blah third test"),
-        new Line("blah third test blah"),
-        new Line("first test this is the"),
-        new Line("here's another test"),
-        new Line("is the first test this"),
         new Line("test blah blah third"),
-        new Line("test here's another"),
-        new Line("test this is the first"),
-        new Line("the first test this is"),
-        new Line("third test blah blah"),
-        new Line("this is the first test")
+        new Line("abcde 12345 67wx yz89"),
+        new Line("12345 67wx yz89 abcde"),
+        new Line("67wx yz89 abcde 12345"),
+        new Line("yz89 abcde 12345 67wx")
     };
     
     Input input = new Input(null);
     input.lines = testInput;
-    Module module = new Alphabetizer(input);
-    module.transform();
+    State state = new CircularShiftState(input);
+    state.transform();
     
     new LinkedHashMap<String, Line[]>() {
-      private static final long serialVersionUID = -3203518313748115804L; {
+      private static final long serialVersionUID = 8260832695616525319L; {
         put("Test Input", testInput);
         put("Expected Output", expectedOutput);
         put("Test Output", input.lines);
@@ -65,11 +64,11 @@ public class AlphabetizerTest {
         System.out.println(v[i].toString());
     });
     
-    assertTrue("Alphabetized output should have an appropriate number of lines.",
+    assertTrue("Circularly-shifted output should have an appropriate number of lines",
         expectedOutput.length == input.lines.length);
     
     for(int i = 0; i < expectedOutput.length; i++) {
-      assertTrue("Line " + i + " of the test output should match line " + i + " of the expected output.",
+      assertTrue("Line " + i + " of the test output should match line " + i + " of the expected output",
           expectedOutput[i].toString().equals(input.lines[i].toString()));
     }
   }

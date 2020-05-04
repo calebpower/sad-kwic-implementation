@@ -1,11 +1,11 @@
-package edu.uco.cs.group3_spring2020.kwic.domain.modules;
+package edu.uco.cs.group3_spring2020.kwic.domain.state;
 
 /**
  * Receives some input, modified is, and returns some output.
  * 
  * @author Caleb L. Power
  */
-public abstract class Module {
+public abstract class State {
   
   protected Input input = null;
   
@@ -14,7 +14,7 @@ public abstract class Module {
    * 
    * @param input the input
    */
-  public Module(Input input) {
+  public State(Input input) {
     this.input = input;
   }
   
@@ -22,5 +22,12 @@ public abstract class Module {
    * Transforms input.
    */
   public abstract void transform();
+  
+  /**
+   * Retrieves the next state.
+   * 
+   * @return the next state
+   */
+  public abstract State nextState();
   
 }

@@ -1,4 +1,4 @@
-package edu.uco.cs.group3_spring2020.kwic.domain.modules;
+package edu.uco.cs.group3_spring2020.kwic.domain.state;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,7 +12,7 @@ import edu.uco.cs.group3_spring2020.kwic.domain.token.Word;
  * 
  * @author Caleb L. Power
  */
-public class CircularShifter extends Module {
+public class CircularShiftState extends State {
   
   List<Shifter> shifters = new ArrayList<>();
   Line[] lines = null;
@@ -22,7 +22,7 @@ public class CircularShifter extends Module {
    * 
    * @param input the input
    */
-  public CircularShifter(Input input) {
+  public CircularShiftState(Input input) {
     super(input);
   }
   
@@ -104,6 +104,10 @@ public class CircularShifter extends Module {
         done.set(true);
       }
     }
+  }
+
+  @Override public State nextState() {
+    return new AlphabetizeState(input);
   }
 
 }

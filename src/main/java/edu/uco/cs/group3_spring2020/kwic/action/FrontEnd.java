@@ -15,6 +15,7 @@ import edu.uco.cs.group3_spring2020.kwic.action.endpoint.Endpoint;
 import edu.uco.cs.group3_spring2020.kwic.action.endpoint.api.POSTContentEndpoint;
 import edu.uco.cs.group3_spring2020.kwic.action.endpoint.page.GETIndexPage;
 import edu.uco.cs.group3_spring2020.kwic.action.hooks.PostContentHook;
+import edu.uco.cs.group3_spring2020.kwic.domain.controllers.MasterController;
 
 /**
  * Front end view; manages all pages and directs traffic to those pages.
@@ -23,27 +24,35 @@ import edu.uco.cs.group3_spring2020.kwic.action.hooks.PostContentHook;
  */
 public class FrontEnd implements Runnable {
   
+
+  private static final int UI_PORT = 4567;
   private static final String RESPONDER_STATIC_FOLDER = "responder/static";
   private static final String RESPONDER_TEMPLATE_FOLDER = "/responder/templates";
   
-  private int port; // the port that the front end should run on
-  private FreeMarkerEngine freeMarkerEngine = null; // the FreeMarker engine
-  private Endpoint endpoints[] = null; // the pages that will be accessible
+  private static FrontEnd frontend = null;
   
   /**
-   * Opens the specified external port so as to launch the front end.
+   * Retrieves the only FrontEnd instance.
    * 
-   * @param port the port by which the front end will be accessible
-   * @param postContentHook the hook that will pipe user input to the KWIC* pipe
+   * @return the only instance of the FrontEnd object
    */
-  public FrontEnd(int port, PostContentHook postContentHook) {
-    this.port = port;
+  public static FrontEnd getInstance() {
+    if(frontend == null) frontend = new FrontEnd();
+    return frontend;
+  }
+  
+  private FreeMarkerEngine freeMarkerEngine = null; // the FreeMarker engine
+  private Endpoint endpoints[] = null; // the pages that will be accessible
+  private PostContentHook postContentHook = null; // the hook used to post content
+  
+  private FrontEnd() {
+    this.postContentHook = new MasterController();
     
     if(freeMarkerEngine == null) freeMarkerEngine = new FreeMarkerEngine(RESPONDER_TEMPLATE_FOLDER);
     
     endpoints = new Endpoint[] {
-        new GETIndexPage(),
-        new POSTContentEndpoint(postContentHook)
+        new GETIndexPage(this),
+        new POSTContentEndpoint(this)
       };
     
     staticFiles.location(RESPONDER_STATIC_FOLDER); // relative to the root of the classpath
@@ -53,7 +62,7 @@ public class FrontEnd implements Runnable {
    * Runs the front end in a separate thread so that it can be halted externally.
    */
   @Override public void run() {
-    port(port);
+    port(UI_PORT);
     
     before((request, response) -> {
       response.header("Access-Control-Allow-Origin", "*");
@@ -102,6 +111,15 @@ public class FrontEnd implements Runnable {
    */
   public void halt() {
     stop();
+  }
+  
+  /**
+   * Retrieves the hook used for posting content.
+   * 
+   * @return the "POST Content" hook
+   */
+  public PostContentHook getPostContentHook() {
+    return postContentHook;
   }
   
 }

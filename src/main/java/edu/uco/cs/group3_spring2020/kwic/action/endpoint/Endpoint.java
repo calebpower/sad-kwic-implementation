@@ -1,5 +1,6 @@
 package edu.uco.cs.group3_spring2020.kwic.action.endpoint;
 
+import edu.uco.cs.group3_spring2020.kwic.action.FrontEnd;
 import edu.uco.cs.group3_spring2020.kwic.action.HTTPMethod;
 import spark.ModelAndView;
 import spark.Request;
@@ -12,16 +13,19 @@ import spark.Response;
  */
 public abstract class Endpoint {
   
+  private FrontEnd frontend = null;
   private HTTPMethod[] methods = null;
   private String route = null;
   
   /**
    * Overloaded constructor to set the request type and the route.
    * 
+   * @parem frontend the frontend
    * @param methods the type of request allows (GET and/or POST)
    * @param route the public endpoint
    */
-  public Endpoint(String route, HTTPMethod... methods) {
+  public Endpoint(FrontEnd frontend, String route, HTTPMethod... methods) {
+    this.frontend = frontend;
     this.route = route;
     this.methods = methods;
   }
@@ -63,5 +67,14 @@ public abstract class Endpoint {
    * @return ModelAndView containing the HTTP response (often in JSON)
    */
   public abstract ModelAndView customAction(Request request, Response response);
+  
+  /**
+   * Retrieves the frontend.
+   * 
+   * @return the frontend object
+   */
+  protected FrontEnd getFrontEnd() {
+    return frontend;
+  }
   
 }

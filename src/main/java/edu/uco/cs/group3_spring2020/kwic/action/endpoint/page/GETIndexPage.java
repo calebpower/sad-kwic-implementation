@@ -2,6 +2,7 @@ package edu.uco.cs.group3_spring2020.kwic.action.endpoint.page;
 
 import java.util.HashMap;
 
+import edu.uco.cs.group3_spring2020.kwic.action.FrontEnd;
 import edu.uco.cs.group3_spring2020.kwic.action.HTTPMethod;
 import edu.uco.cs.group3_spring2020.kwic.action.endpoint.Endpoint;
 import spark.ModelAndView;
@@ -16,10 +17,12 @@ import spark.Response;
 public class GETIndexPage extends Endpoint {
 
   /**
-   * Null constructor to initialize the index page and set the appropriate HTTP request type.
+   * Overloaded constructor to initialize the index page and set the appropriate HTTP request type.
+   * 
+   * @param frontend the frontend
    */
-  public GETIndexPage() {
-    super("/", HTTPMethod.GET); // this page should only be accessible via GET
+  public GETIndexPage(FrontEnd frontend) {
+    super(frontend, "/", HTTPMethod.GET); // this page should only be accessible via GET
   }
 
   /**

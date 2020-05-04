@@ -1,4 +1,4 @@
-package edu.uco.cs.group3_spring2020.kwic.domain.modules;
+package edu.uco.cs.group3_spring2020.kwic.domain.state;
 
 import org.json.JSONArray;
 

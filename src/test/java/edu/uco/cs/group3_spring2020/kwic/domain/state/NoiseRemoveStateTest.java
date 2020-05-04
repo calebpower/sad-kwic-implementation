@@ -1,4 +1,4 @@
-package edu.uco.cs.group3_spring2020.kwic.domain.modules;
+package edu.uco.cs.group3_spring2020.kwic.domain.state;
 
 import static org.junit.Assert.assertTrue;
 
@@ -6,6 +6,9 @@ import java.util.LinkedHashMap;
 
 import org.junit.Test;
 
+import edu.uco.cs.group3_spring2020.kwic.domain.state.Input;
+import edu.uco.cs.group3_spring2020.kwic.domain.state.State;
+import edu.uco.cs.group3_spring2020.kwic.domain.state.NoiseRemoveState;
 import edu.uco.cs.group3_spring2020.kwic.domain.token.Line;
 
 /**
@@ -13,7 +16,7 @@ import edu.uco.cs.group3_spring2020.kwic.domain.token.Line;
  * 
  * @author Caleb L. Power
  */
-public class NoiseRemoverTest {
+public class NoiseRemoveStateTest {
   
   /**
    * Tests the noise removing mechanism.
@@ -57,8 +60,8 @@ public class NoiseRemoverTest {
     
     Input input = new Input(null);
     input.lines = testInput;
-    Module module = new NoiseRemover(input);
-    module.transform();
+    State state = new NoiseRemoveState(input);
+    state.transform();
     
     new LinkedHashMap<String, Line[]>() {
       private static final long serialVersionUID = 5858111360387828009L; {

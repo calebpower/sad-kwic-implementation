@@ -6,6 +6,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import edu.uco.cs.group3_spring2020.kwic.action.FrontEnd;
 import edu.uco.cs.group3_spring2020.kwic.action.HTTPMethod;
 import edu.uco.cs.group3_spring2020.kwic.action.endpoint.Endpoint;
 import edu.uco.cs.group3_spring2020.kwic.action.hooks.PostContentHook;
@@ -19,17 +20,14 @@ import spark.Response;
  * @author Caleb L. Power
  */
 public class POSTContentEndpoint extends Endpoint {
-  
-  private PostContentHook hook = null;
 
   /**
    * Overloaded constructor to initialize the index page and set the appropriate HTTP request type.
    * 
-   * @param hook the hook that will pipe user input to the KWIC* pipe
+   * @param frontend the frontend
    */
-  public POSTContentEndpoint(PostContentHook hook) {
-    super("/api/content", HTTPMethod.POST); //this page should only be accessible via GET
-    this.hook = hook;
+  public POSTContentEndpoint(FrontEnd frontend) {
+    super(frontend, "/api/content", HTTPMethod.POST); //this page should only be accessible via GET
   }
 
   /**
@@ -43,7 +41,7 @@ public class POSTContentEndpoint extends Endpoint {
       JSONObject requestBody = new JSONObject(request.body()); // grab the request
       JSONArray linesInput = requestBody.getJSONArray("lines"); // retrieve the user input array
 
-      JSONArray linesOutput = hook.dispatch(linesInput); // pass the input to the hook, retrieve the output
+      JSONArray linesOutput = getFrontEnd().getPostContentHook().dispatch(linesInput); // pass the input to the hook, retrieve the output
       
       responseBody // if we get here, everything's probably going to be okay
           .put("status", "ok")

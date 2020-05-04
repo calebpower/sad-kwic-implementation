@@ -1,4 +1,4 @@
-package edu.uco.cs.group3_spring2020.kwic.domain.modules;
+package edu.uco.cs.group3_spring2020.kwic.domain.state;
 
 import java.util.concurrent.atomic.AtomicBoolean;
 
@@ -10,7 +10,7 @@ import edu.uco.cs.group3_spring2020.kwic.domain.token.Line;
  * 
  * @author Caleb L. Power
  */
-public class Alphabetizer extends Module {
+public class AlphabetizeState extends State {
   
   Line[] lines = null;
 
@@ -19,7 +19,7 @@ public class Alphabetizer extends Module {
    * 
    * @param input the input
    */
-  public Alphabetizer(Input input) {
+  public AlphabetizeState(Input input) {
     super(input);
   }
   
@@ -104,6 +104,10 @@ public class Alphabetizer extends Module {
       done.set(true);
     }
     
+  }
+
+  @Override public State nextState() {
+    return new NoiseRemoveState(input);
   }
 
 }

@@ -4,12 +4,10 @@ import org.json.JSONArray;
 import org.json.JSONException;
 
 import edu.uco.cs.group3_spring2020.kwic.action.hooks.PostContentHook;
-import edu.uco.cs.group3_spring2020.kwic.domain.modules.Alphabetizer;
-import edu.uco.cs.group3_spring2020.kwic.domain.modules.CircularShifter;
-import edu.uco.cs.group3_spring2020.kwic.domain.modules.Input;
-import edu.uco.cs.group3_spring2020.kwic.domain.modules.Module;
-import edu.uco.cs.group3_spring2020.kwic.domain.modules.NoiseRemover;
-import edu.uco.cs.group3_spring2020.kwic.domain.modules.Output;
+import edu.uco.cs.group3_spring2020.kwic.domain.state.CircularShiftState;
+import edu.uco.cs.group3_spring2020.kwic.domain.state.Input;
+import edu.uco.cs.group3_spring2020.kwic.domain.state.Output;
+import edu.uco.cs.group3_spring2020.kwic.domain.state.State;
 
 /**
  * Handles sequencing of other modules
@@ -25,15 +23,12 @@ public class MasterController implements PostContentHook {
     final long startTime = System.currentTimeMillis();
     Input input = new Input(dataInput);
     
-    final Module[] modules = new Module[] { // collect the modules
-        new CircularShifter(input), // circular shift module
-        new Alphabetizer(input), // alphabetizer module
-        new NoiseRemover(input) // noise remover module
-    };
+    State state = new CircularShiftState(input);
+    while(state != null) {
+      state.transform();
+      state = state.nextState();
+    }
     
-    for(Module module : modules) // transform the lines
-      module.transform();
-
     final long stopTime = System.currentTimeMillis();
     System.out.println("Operation completed in " + (stopTime - startTime) + " milliseconds.");
     

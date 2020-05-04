@@ -1,4 +1,4 @@
-package edu.uco.cs.group3_spring2020.kwic.domain.modules;
+package edu.uco.cs.group3_spring2020.kwic.domain.state;
 
 import java.util.HashSet;
 import java.util.LinkedList;
@@ -12,14 +12,14 @@ import edu.uco.cs.group3_spring2020.kwic.domain.token.Line;
  * 
  * @author Caleb L. Power
  */
-public class NoiseRemover extends Module {
+public class NoiseRemoveState extends State {
   
   /**
    * Overloaded constructor.
    * 
    * @param input the input
    */
-  public NoiseRemover(Input input) {
+  public NoiseRemoveState(Input input) {
     super(input);
   }
   
@@ -55,6 +55,10 @@ public class NoiseRemover extends Module {
     for(int i = result.size() - 1; i >= 0; i--)
       resultArray[i] = result.remove(0);
     input.lines = resultArray;
+  }
+
+  @Override public State nextState() {
+    return null;
   }
   
 }
