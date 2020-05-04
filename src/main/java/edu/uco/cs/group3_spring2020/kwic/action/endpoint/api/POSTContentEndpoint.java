@@ -9,7 +9,6 @@ import org.json.JSONObject;
 import edu.uco.cs.group3_spring2020.kwic.action.FrontEnd;
 import edu.uco.cs.group3_spring2020.kwic.action.HTTPMethod;
 import edu.uco.cs.group3_spring2020.kwic.action.endpoint.Endpoint;
-import edu.uco.cs.group3_spring2020.kwic.action.hooks.PostContentHook;
 import spark.ModelAndView;
 import spark.Request;
 import spark.Response;

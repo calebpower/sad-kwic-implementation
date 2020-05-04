@@ -20,7 +20,7 @@ public abstract class Endpoint {
   /**
    * Overloaded constructor to set the request type and the route.
    * 
-   * @parem frontend the frontend
+   * @param frontend the frontend
    * @param methods the type of request allows (GET and/or POST)
    * @param route the public endpoint
    */

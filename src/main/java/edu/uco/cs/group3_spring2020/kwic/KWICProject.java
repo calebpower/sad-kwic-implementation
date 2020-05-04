@@ -1,8 +1,6 @@
 package edu.uco.cs.group3_spring2020.kwic;
 
 import edu.uco.cs.group3_spring2020.kwic.action.FrontEnd;
-import edu.uco.cs.group3_spring2020.kwic.action.hooks.PostContentHook;
-import edu.uco.cs.group3_spring2020.kwic.domain.controllers.MasterController;
 
 /**
  * Engine to index user-provided lines using KWIC* method.
